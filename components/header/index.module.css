@@ -1,0 +1,12 @@
+.header {
+  font-size: var(--xxl-font-size);
+  font-weight: 600;
+  background-color: var(--secondary-color);;
+  text-align: left;
+}
+
+.inner {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 12px 20px;
+}

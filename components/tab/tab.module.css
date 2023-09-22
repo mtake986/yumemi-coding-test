@@ -1,0 +1,31 @@
+.container {
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+  background: white;
+  font-size: var(--md-font-size);
+}
+
+.container:hover {
+  opacity: 0.5;
+}
+
+.container.selected {
+  opacity: 1;
+  background: var(--accent-color);
+  color: var(--second-accent-color);
+}
+.container.selected:hover {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .container {
+    font-size: var(--sm-font-size);
+    padding: 4px 8px;
+  font-size: var(--sm-font-size);
+  }
+}
