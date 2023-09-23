@@ -7,7 +7,7 @@ type Props = {
   pref: TypePref;
 };
 const Pref = ({ pref }: Props) => {
-  const { manageSelectedPrefs, fetchPopulationComposition } = useResas();
+  const { manageSelectedPrefs, fetchPopulationData } = useResas();
   return (
     <div className={styles.stateContainer}>
       <input
@@ -16,7 +16,7 @@ const Pref = ({ pref }: Props) => {
         className={styles.input}
         onChange={() => {
           manageSelectedPrefs(pref)
-          fetchPopulationComposition(pref.prefCode)
+          fetchPopulationData(pref)
         }}
       />
       <label className={styles.label} htmlFor={pref.prefName}>

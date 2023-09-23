@@ -11,7 +11,7 @@ const Prefs = () => {
     "X-API-KEY": apiKey,
     // "Content-Type": "application/json;charset=UTF-8",
   };
-  const { fetchPrefs, selectedPrefs, fetchPopulationComposition } = useResas();
+  const { fetchPrefs, selectedPrefs, fetchPopulationData } = useResas();
   const { data, isLoading } = useQuery<TypePref[]>({
     queryKey: ["prefectures"],
     queryFn: () =>

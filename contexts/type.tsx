@@ -19,4 +19,24 @@ export type TypeTabValue = {
   id: number;
   en: string;
   jp: string;
-}
+};
+export type TypeSpecificPopulationAndYear = {
+  year: number;
+  value: number;
+};
+
+export type TypePopulations = {
+  // [prefCode: number]: [{ label: string; data: TypePopulationAndYear[] }];
+  [prefName: string]: Array<{
+    label: string;
+    data: Array<TypeSpecificPopulationAndYear>;
+  }>;
+
+  // label: string;
+  // data: TypePopulationAndYear[];
+};
+
+export type TypeSeries = {
+  name: string;
+  data: number[];
+};
