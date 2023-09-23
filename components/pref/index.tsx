@@ -7,7 +7,13 @@ type Props = {
   pref: TypePref;
 };
 const Pref = ({ pref }: Props) => {
-  const { manageSelectedPrefs, fetchPopulationData } = useResas();
+  const {
+    addToSelectedPrefs,
+    removeFromSelectedPref,
+    fetchPopulationData,
+    populationData,
+    removePopulationData,
+  } = useResas();
   return (
     <div className={styles.stateContainer}>
       <input
@@ -15,8 +21,16 @@ const Pref = ({ pref }: Props) => {
         type="checkbox"
         className={styles.input}
         onChange={() => {
-          manageSelectedPrefs(pref)
-          fetchPopulationData(pref)
+          const keys = populationData.map((data) => {
+            return Object.keys(data)[0];
+          });
+          if (keys.includes(pref.prefName)) {
+            removeFromSelectedPref(pref)
+            removePopulationData(pref);
+          } else {
+            addToSelectedPrefs(pref);
+            fetchPopulationData(pref);
+          }
         }}
       />
       <label className={styles.label} htmlFor={pref.prefName}>

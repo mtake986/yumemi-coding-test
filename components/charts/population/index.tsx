@@ -10,11 +10,12 @@ const PopulationComposition = () => {
 
   let series: Array<TypeSeries> = [];
   if (populationData) {
-    console.log(populationData);
-    series = populationData.map((data) => {
-      const key = Object.keys(data)[0];
-      console.log(data[key][0].data);
-      return { name: key, data: data[key][3].data.map((data) => data.value) };
+    series = populationData.map((eachPref) => {
+      const key = Object.keys(eachPref)[0];
+      return {
+        name: key,
+        data: eachPref[key][3].data.map((eachYear) => eachYear.value),
+      };
     });
   }
 
@@ -63,14 +64,11 @@ const PopulationComposition = () => {
           connectorAllowed: false,
         },
         pointStart: 1960,
+        // pointEnd: 2020
       },
     },
 
     series: series,
-    // {
-    //   name: populationData && populationData[0]["宮崎県"][0].label,
-    //   data: populationData && populationData[0]["宮崎県"][0].data,
-    // },
 
     responsive: {
       rules: [
@@ -89,6 +87,9 @@ const PopulationComposition = () => {
       ],
     },
   };
+  if (populationData.length === 0) {
+    return <div>データがありません</div>;
+  }
   return (
     <section>
       {/* {populationData.map((data, i) => {

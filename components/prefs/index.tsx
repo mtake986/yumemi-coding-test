@@ -4,14 +4,9 @@ import Pref from "../pref";
 import styles from "./prefs.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { TypePref } from "@/contexts/type";
+import { headers } from '@/config/config';
 
 const Prefs = () => {
-  const apiKey = "C52t390Q8f4qFws9q7vgCyaOUtAlPkGzmtWcogVY";
-  const headers = {
-    "X-API-KEY": apiKey,
-    // "Content-Type": "application/json;charset=UTF-8",
-  };
-  const { fetchPrefs, selectedPrefs, fetchPopulationData } = useResas();
   const { data, isLoading } = useQuery<TypePref[]>({
     queryKey: ["prefectures"],
     queryFn: () =>

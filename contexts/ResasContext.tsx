@@ -16,7 +16,9 @@ type ResasProviderProps = {
 type ResasContextType = {
   prefs: TypePref[];
   fetchPrefs: () => void;
-  manageSelectedPrefs: (pref: TypePref) => void;
+
+  addToSelectedPrefs: (storedPref: TypePref) => void;
+  removeFromSelectedPref: (targetPref: TypePref) => void;
   selectedPrefs: TypePref[];
 
   currentTab: TypeTabValue;
@@ -24,6 +26,7 @@ type ResasContextType = {
 
   fetchPopulationData: (pref: TypePref) => void;
   populationData: TypePopulations[];
+  removePopulationData: (pref: TypePref) => void;
 };
 
 const ResasContext = createContext({} as ResasContextType);
@@ -43,6 +46,8 @@ export function ResasProvider({ children }: ResasProviderProps) {
 
   const [populationData, setPopulationData] = useState<TypePopulations[]>([]);
 
+  const [isChartLoading, setIsChartLoading] = useState<boolean>(false);
+
   const fetchPrefs = () => {
     // 47都道府県の一覧を取得
     // API Doc: https://opendata.resas-portal.go.jp/docs/api/v1/prefectures.html
@@ -54,13 +59,17 @@ export function ResasProvider({ children }: ResasProviderProps) {
         setPrefs(res.result);
       });
   };
-  const manageSelectedPrefs = (storedPref: TypePref) => {
+
+  const removeFromSelectedPref = (targetPref: TypePref) => {
     setSelectedPrefs((prev) => {
-      if (prev.includes(storedPref)) {
-        return prev.filter((pref) => pref.prefCode !== storedPref.prefCode);
-      } else {
-        return [...prev, storedPref];
-      }
+      return prev.filter(
+        (selectedPref) => selectedPref.prefName !== targetPref.prefName
+      );
+    });
+  };
+  const addToSelectedPrefs = (storedPref: TypePref) => {
+    setSelectedPrefs((prev) => {
+      return [...prev, storedPref];
     });
   };
 
@@ -69,35 +78,40 @@ export function ResasProvider({ children }: ResasProviderProps) {
     setCurrentTab(tabValues[id]);
   };
 
-  const fetchPopulationData = (pref: TypePref) => {
+  const removePopulationData = (pref: TypePref) => {
+    setIsChartLoading(true);
+    const keys = populationData.map((data) => {
+      return Object.keys(data)[0];
+    });
     // もしpopulationDataにすでにデータがあれば、取り除く
-    const keys = populationData.map(data => {
-      return Object.keys(data)[0]
-    })
-
-    if (keys.includes(pref.prefName)) {
-      console.log("populationDataにすでにデータがあるから、取り除く");
-      setPopulationData(populationData.filter(
+    console.log("populationDataにすでにデータがあるから、取り除く");
+    setPopulationData(
+      populationData.filter(
         (eachPref) => Object.keys(eachPref)[0] !== pref.prefName
-      ))
-    }
-    // populationDataにデータがないから、取得する
-    else {
-      console.log("populationDataにデータがないから、取得する");
-      fetch(
-        `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-        { headers }
       )
-        .then((response) => {
-          console.log(response);
-          return response.json();
-        })
-        .then((res) => {
-          setPopulationData((prev) => {
-            return [...prev, { [pref.prefName]: res.result.data }];
-          });
+    );
+    setIsChartLoading(false);
+  };
+
+  const fetchPopulationData = (pref: TypePref) => {
+    setIsChartLoading(true);
+    // populationDataにデータがないから、取得する
+    console.log("populationDataにデータがないから、取得する");
+    fetch(
+      `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
+      { headers }
+    )
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((res) => {
+        setPopulationData((prev) => {
+          return [...prev, { [pref.prefName]: res.result.data }];
         });
-    }
+      });
+
+    setIsChartLoading(false);
   };
 
   return (
@@ -105,7 +119,8 @@ export function ResasProvider({ children }: ResasProviderProps) {
       value={{
         prefs,
         fetchPrefs,
-        manageSelectedPrefs,
+        addToSelectedPrefs,
+        removeFromSelectedPref,
         selectedPrefs,
 
         currentTab,
@@ -113,6 +128,7 @@ export function ResasProvider({ children }: ResasProviderProps) {
 
         fetchPopulationData,
         populationData,
+        removePopulationData,
       }}
     >
       {children}
