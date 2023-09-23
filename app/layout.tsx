@@ -2,6 +2,8 @@ import { ResasProvider } from "@/contexts/ResasContext";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import React from "react";
+import { ReactQueryProvider } from "./ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="jp">
+    <ReactQueryProvider>
       <ResasProvider>
-        <body className={inter.className}>{children}</body>
+        <html lang="jp">
+          <body className={inter.className} suppressHydrationWarning={true}>
+            {children}
+          </body>
+        </html>
       </ResasProvider>
-    </html>
+    </ReactQueryProvider>
   );
 }

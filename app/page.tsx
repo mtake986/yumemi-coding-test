@@ -1,18 +1,14 @@
 "use client";
 import Prefs from "@/components/prefs";
 import { ResasProvider, useResas } from "@/contexts/ResasContext";
-import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import PopulationComposition from "@/components/charts/population";
 import Tabs from "@/components/tabs";
 import Header from "@/components/header";
+import { useQuery } from "@tanstack/react-query";
+import { TypePref } from "@/contexts/type";
 
 export default function HomePage() {
-  const { fetchPrefs, selectedPrefs } = useResas();
-  useEffect(() => {
-    fetchPrefs();
-  }, []);
-
   return (
     <div className={styles.container}>
       <Header />
