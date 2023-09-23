@@ -1,10 +1,9 @@
-
 import React from "react";
-import Pref from "../pref";
+import Pref from "./pref";
 import styles from "./prefs.module.css";
 import { TypePref } from "@/contexts/type";
 import { headers } from "@/config/config";
-
+import Buttons from "./buttons";
 
 const getPrefs = async () => {
   const res = await fetch(
@@ -21,12 +20,14 @@ const Prefs = async () => {
   const prefs = await getPrefs();
   return (
     <section className={styles.container}>
-      {prefs?.map((pref: TypePref, i: number) => (
-        <Pref key={i} pref={pref} />
-      ))}
+      <div className={styles.prefs}>
+        {prefs?.map((pref: TypePref, i: number) => (
+          <Pref key={i} pref={pref} />
+        ))}
+      </div>
+      <Buttons />
     </section>
   );
 };
-
 
 export default Prefs;

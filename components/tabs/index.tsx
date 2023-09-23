@@ -1,7 +1,7 @@
 import React from "react";
 
 import { tabValues } from "@/public/constants";
-import Tab from "../tab";
+import Tab from "./tab";
 import styles from './tabs.module.css'
 const Tabs = () => {
 

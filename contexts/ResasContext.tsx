@@ -41,7 +41,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
   const [prefs, setPrefs] = useState<TypePref[]>([]);
   const [selectedPrefs, setSelectedPrefs] = useState<TypePref[]>([]);
 
-
   const [currentTab, setCurrentTab] = useState<TypeTabValue>(tabValues[0]);
   const [populationData, setPopulationData] = useState<TypePopulations[]>([]);
 
@@ -107,12 +106,33 @@ export function ResasProvider({ children }: ResasProviderProps) {
         setPopulationData((prev) => {
           return [...prev, { [pref.prefName]: res.result.data }];
         });
-        
-      }).then(() =>
-        setIsChartLoading(false)
-      );
-
+      })
+      .then(() => setIsChartLoading(false));
   };
+
+  // todo: すべての都道府県のデータを取得する
+  const selectAllPrefs = () => {
+    setIsChartLoading(true);
+
+    const prefCodes = prefs.map((pref) => pref.prefCode);
+    fetch(
+      `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
+      { headers }
+    )
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((res) => {
+        setPopulationData((prev) => {
+          return [...prev, { [pref.prefName]: res.result.data }];
+        });
+      })
+      .then(() => setIsChartLoading(false));
+  };
+
+  // todo: すべての都道府県のデータを取り除く
+  const unselectAllPrefs = () => {};
 
   return (
     <ResasContext.Provider

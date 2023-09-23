@@ -8,7 +8,6 @@ import { tabValues } from "@/public/constants";
 
 const PopulationComposition = () => {
   const {
-    fetchPopulationData,
     populationData,
     currentTab,
     selectedPrefs,
