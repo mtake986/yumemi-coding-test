@@ -3,7 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import React from "react";
-import { ReactQueryProvider } from "./ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ReactQueryProvider>
+    // <ReactQueryProvider>
       <ResasProvider>
         <html lang="jp">
           <body className={inter.className} suppressHydrationWarning={true}>
@@ -25,6 +24,6 @@ export default function RootLayout({
           </body>
         </html>
       </ResasProvider>
-    </ReactQueryProvider>
+    // </ReactQueryProvider>
   );
 }

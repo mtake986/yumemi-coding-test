@@ -8,6 +8,7 @@ import {
 } from "./type";
 import { useSearchParams } from "react-router-dom";
 import { tabValues } from "@/public/constants";
+import {headers} from '@/config/config';
 
 type ResasProviderProps = {
   children: ReactNode;
@@ -27,6 +28,7 @@ type ResasContextType = {
   fetchPopulationData: (pref: TypePref) => void;
   populationData: TypePopulations[];
   removePopulationData: (pref: TypePref) => void;
+  isChartLoading: boolean;
 };
 
 const ResasContext = createContext({} as ResasContextType);
@@ -38,12 +40,9 @@ export function useResas() {
 export function ResasProvider({ children }: ResasProviderProps) {
   const [prefs, setPrefs] = useState<TypePref[]>([]);
   const [selectedPrefs, setSelectedPrefs] = useState<TypePref[]>([]);
-  const apiKey = "C52t390Q8f4qFws9q7vgCyaOUtAlPkGzmtWcogVY";
-  const headers = {
-    "X-API-KEY": apiKey,
-    "Content-Type": "application/json;charset=UTF-8",
-  };
 
+
+  const [currentTab, setCurrentTab] = useState<TypeTabValue>(tabValues[0]);
   const [populationData, setPopulationData] = useState<TypePopulations[]>([]);
 
   const [isChartLoading, setIsChartLoading] = useState<boolean>(false);
@@ -73,7 +72,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
     });
   };
 
-  const [currentTab, setCurrentTab] = useState<TypeTabValue>(tabValues[0]);
   const switchTab = (id: number) => {
     setCurrentTab(tabValues[id]);
   };
@@ -109,9 +107,11 @@ export function ResasProvider({ children }: ResasProviderProps) {
         setPopulationData((prev) => {
           return [...prev, { [pref.prefName]: res.result.data }];
         });
-      });
+        
+      }).then(() =>
+        setIsChartLoading(false)
+      );
 
-    setIsChartLoading(false);
   };
 
   return (
@@ -129,6 +129,7 @@ export function ResasProvider({ children }: ResasProviderProps) {
         fetchPopulationData,
         populationData,
         removePopulationData,
+        isChartLoading,
       }}
     >
       {children}

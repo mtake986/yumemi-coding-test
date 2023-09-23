@@ -1,33 +1,32 @@
-import { useResas } from "@/contexts/ResasContext";
+
 import React from "react";
 import Pref from "../pref";
 import styles from "./prefs.module.css";
-import { useQuery } from "@tanstack/react-query";
 import { TypePref } from "@/contexts/type";
-import { headers } from '@/config/config';
+import { headers } from "@/config/config";
 
-const Prefs = () => {
-  const { data, isLoading } = useQuery<TypePref[]>({
-    queryKey: ["prefectures"],
-    queryFn: () =>
-      fetch("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
-        headers,
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          return res.result;
-        }),
-  });
 
-  if (isLoading || !data) return <div>loading...</div>;
+const getPrefs = async () => {
+  const res = await fetch(
+    "https://opendata.resas-portal.go.jp/api/v1/prefectures",
+    {
+      headers,
+    }
+  );
+  const data = await res.json();
+  return data.result;
+};
+
+const Prefs = async () => {
+  const prefs = await getPrefs();
   return (
     <section className={styles.container}>
-      {data?.map((pref, i) => (
+      {prefs?.map((pref: TypePref, i: number) => (
         <Pref key={i} pref={pref} />
       ))}
     </section>
   );
 };
+
 
 export default Prefs;

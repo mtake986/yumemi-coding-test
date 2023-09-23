@@ -4,9 +4,24 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useResas } from "@/contexts/ResasContext";
 import { TypeSeries } from "@/contexts/type";
+import { tabValues } from "@/public/constants";
 
 const PopulationComposition = () => {
-  const { fetchPopulationData, populationData } = useResas();
+  const {
+    fetchPopulationData,
+    populationData,
+    currentTab,
+    selectedPrefs,
+    isChartLoading,
+  } = useResas();
+
+  if (selectedPrefs.length === 0 && populationData.length === 0) {
+    return <div>都道府県を選択してください。</div>;
+  }
+
+  if (isChartLoading) {
+    return <div>データを取得しています。</div>;
+  }
 
   let series: Array<TypeSeries> = [];
   if (populationData) {
@@ -14,35 +29,30 @@ const PopulationComposition = () => {
       const key = Object.keys(eachPref)[0];
       return {
         name: key,
-        data: eachPref[key][3].data.map((eachYear) => eachYear.value),
+        data: eachPref[key][currentTab.id].data.map(
+          (eachYear) => eachYear.value
+        ),
       };
     });
   }
-
-  // series = [{
-  //   name: "Installation & Developers",
-  //   data: [1,2,3,4,5],
-  // }, {
-  //   name: "Population",
-  //   data: [1,2,3,4,6],
-  // }]
   const options = {
     chart: {
       type: "spline",
     },
     title: {
-      text: "U.S Solar Employment Growth",
+      text: currentTab.jp,
+      // text: 'currentTab.jp',
       align: "left",
     },
 
     subtitle: {
-      text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
+      text: tabValues[currentTab.id].subtitle,
       align: "left",
     },
 
     yAxis: {
       title: {
-        text: "Number of Employees",
+        text: currentTab.jp,
       },
     },
 
@@ -50,6 +60,14 @@ const PopulationComposition = () => {
       accessibility: {
         rangeDescription: "Range: 2010 to 2020",
       },
+      title: {
+        text: "Year",
+      },
+      // categories: {
+      //   categories: populationData[0][Object.keys(populationData[0])[0]][
+      //     currentTab.id
+      //   ].data.map((eachYear) => eachYear.year),
+      // }
     },
 
     legend: {
@@ -64,12 +82,14 @@ const PopulationComposition = () => {
           connectorAllowed: false,
         },
         pointStart: 1960,
-        // pointEnd: 2020
+        pointEnd: 2020,
       },
     },
 
     series: series,
-
+    accessibility: {
+      enabled: false,
+    },
     responsive: {
       rules: [
         {
@@ -87,9 +107,7 @@ const PopulationComposition = () => {
       ],
     },
   };
-  if (populationData.length === 0) {
-    return <div>データがありません</div>;
-  }
+
   return (
     <section>
       {/* {populationData.map((data, i) => {
