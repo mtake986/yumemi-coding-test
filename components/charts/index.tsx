@@ -5,6 +5,7 @@ import HighchartsReact from "highcharts-react-official";
 import { useResas } from "@/contexts/ResasContext";
 import { TypeSeries } from "@/contexts/type";
 import { tabValues } from "@/public/constants";
+import styles from './index.module.css'
 
 const PopulationComposition = () => {
   const { populationData, currentTab, selectedPrefs, isPopulationDataLoading } =
@@ -15,7 +16,7 @@ const PopulationComposition = () => {
   }
 
   if (isPopulationDataLoading) {
-    return <div>データを取得しています。</div>;
+    return <div className={styles.noData}>データを取得しています。</div>;
   }
 
   let series: Array<TypeSeries> = [];
@@ -53,11 +54,13 @@ const PopulationComposition = () => {
 
     xAxis: {
       accessibility: {
-        rangeDescription: "Range: 2010 to 2020",
+        rangeDescription: "Range: 1960 to 2020",
       },
       title: {
         text: "Year",
       },
+      min: 1960, 
+      max: 2020,
       // categories: {
       //   categories: populationData[0][Object.keys(populationData[0])[0]][
       //     currentTab.id
@@ -76,7 +79,7 @@ const PopulationComposition = () => {
         label: {
           connectorAllowed: false,
         },
-        pointStart: 1960,
+        pointStart: 1980,
         pointEnd: 2020,
       },
     },
@@ -105,11 +108,6 @@ const PopulationComposition = () => {
 
   return (
     <section>
-      {/* {populationData.map((data, i) => {
-        console.log(series);
-        console.log(Object.keys(populationData)[i]);
-        return <div key={i}>{123}</div>;
-      })} */}
       <HighchartsReact highcharts={Highcharts} options={options} />
     </section>
   );

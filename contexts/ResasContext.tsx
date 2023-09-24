@@ -31,6 +31,8 @@ type ResasContextType = {
 
   selectAllPrefs: (prefs: TypePref[]) => void;
   unselectAllPrefs: () => void;
+
+  setPrefs: (prefs: TypePref[]) => void;
 };
 
 const ResasContext = createContext({} as ResasContextType);
@@ -140,20 +142,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
           i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null
         );
     }
-    // fetch(
-    //   `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-    //   { headers }
-    // )
-    //   .then((response) => {
-    //     console.log(response);
-    //     return response.json();
-    //   })
-    //   .then((res) => {
-    //     setPopulationData((prev) => {
-    //       return [...prev, { [pref.prefName]: res.result.data }];
-    //     });
-    //   })
-    //   .then(() => setIsPopulationDataLoading(false));
   };
 
   // todo: すべての都道府県のデータを取り除く
@@ -181,6 +169,7 @@ export function ResasProvider({ children }: ResasProviderProps) {
 
         selectAllPrefs,
         unselectAllPrefs,
+        setPrefs,
       }}
     >
       {children}

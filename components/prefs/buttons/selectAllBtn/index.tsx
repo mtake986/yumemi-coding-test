@@ -8,11 +8,21 @@ type Props = {
 };
 
 const SelectAllBtn = ({prefs}: Props) => {
-  const { selectAllPrefs } = useResas();
+  const { selectAllPrefs, isPopulationDataLoading, selectedPrefs } = useResas();
   return (
-    <div className={styles.container} onClick={() => selectAllPrefs(prefs)}>
+    <button
+      disabled={
+        isPopulationDataLoading || selectedPrefs.length >= 47 ? true : false
+      }
+      className={`${styles.container} ${
+        isPopulationDataLoading || selectedPrefs.length === 47
+          ? styles.disable
+          : null
+      }`}
+      onClick={() => selectAllPrefs(prefs)}
+    >
       全選択
-    </div>
+    </button>
   );
 };
 
