@@ -8,7 +8,7 @@ import {
 } from "./type";
 import { useSearchParams } from "react-router-dom";
 import { tabValues } from "@/public/constants";
-import {headers} from '@/config/config';
+import { headers } from "@/config/config";
 
 type ResasProviderProps = {
   children: ReactNode;
@@ -17,7 +17,6 @@ type ResasProviderProps = {
 type ResasContextType = {
   prefs: TypePref[];
   fetchPrefs: () => void;
-
   addToSelectedPrefs: (storedPref: TypePref) => void;
   removeFromSelectedPref: (targetPref: TypePref) => void;
   selectedPrefs: TypePref[];
@@ -28,7 +27,10 @@ type ResasContextType = {
   fetchPopulationData: (pref: TypePref) => void;
   populationData: TypePopulations[];
   removePopulationData: (pref: TypePref) => void;
-  isChartLoading: boolean;
+  isPopulationDataLoading: boolean;
+
+  selectAllPrefs: (prefs: TypePref[]) => void;
+  unselectAllPrefs: () => void;
 };
 
 const ResasContext = createContext({} as ResasContextType);
@@ -44,7 +46,8 @@ export function ResasProvider({ children }: ResasProviderProps) {
   const [currentTab, setCurrentTab] = useState<TypeTabValue>(tabValues[0]);
   const [populationData, setPopulationData] = useState<TypePopulations[]>([]);
 
-  const [isChartLoading, setIsChartLoading] = useState<boolean>(false);
+  const [isPopulationDataLoading, setIsPopulationDataLoading] =
+    useState<boolean>(false);
 
   const fetchPrefs = () => {
     // 47都道府県の一覧を取得
@@ -76,7 +79,7 @@ export function ResasProvider({ children }: ResasProviderProps) {
   };
 
   const removePopulationData = (pref: TypePref) => {
-    setIsChartLoading(true);
+    setIsPopulationDataLoading(true);
     const keys = populationData.map((data) => {
       return Object.keys(data)[0];
     });
@@ -87,11 +90,11 @@ export function ResasProvider({ children }: ResasProviderProps) {
         (eachPref) => Object.keys(eachPref)[0] !== pref.prefName
       )
     );
-    setIsChartLoading(false);
+    setIsPopulationDataLoading(false);
   };
 
   const fetchPopulationData = (pref: TypePref) => {
-    setIsChartLoading(true);
+    setIsPopulationDataLoading(true);
     // populationDataにデータがないから、取得する
     console.log("populationDataにデータがないから、取得する");
     fetch(
@@ -107,32 +110,57 @@ export function ResasProvider({ children }: ResasProviderProps) {
           return [...prev, { [pref.prefName]: res.result.data }];
         });
       })
-      .then(() => setIsChartLoading(false));
+      .then(() => setIsPopulationDataLoading(false));
   };
 
   // todo: すべての都道府県のデータを取得する
-  const selectAllPrefs = () => {
-    setIsChartLoading(true);
+  const selectAllPrefs = (prefs: TypePref[]) => {
+    setIsPopulationDataLoading(true);
 
-    const prefCodes = prefs.map((pref) => pref.prefCode);
-    fetch(
-      `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-      { headers }
-    )
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((res) => {
-        setPopulationData((prev) => {
-          return [...prev, { [pref.prefName]: res.result.data }];
-        });
-      })
-      .then(() => setIsChartLoading(false));
+    console.log(prefs);
+    for (let i = 0; i < prefs.length; i++) {
+      const pref = prefs[i];
+      setSelectedPrefs((prev) => {
+        return [...prev, pref];
+      });
+      fetch(
+        `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
+        { headers }
+      )
+        .then((response) => {
+          console.log(response);
+          return response.json();
+        })
+        .then((res) => {
+          setPopulationData((prev) => {
+            return [...prev, { [pref.prefName]: res.result.data }];
+          });
+        })
+        .then(() =>
+          i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null
+        );
+    }
+    // fetch(
+    //   `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
+    //   { headers }
+    // )
+    //   .then((response) => {
+    //     console.log(response);
+    //     return response.json();
+    //   })
+    //   .then((res) => {
+    //     setPopulationData((prev) => {
+    //       return [...prev, { [pref.prefName]: res.result.data }];
+    //     });
+    //   })
+    //   .then(() => setIsPopulationDataLoading(false));
   };
 
   // todo: すべての都道府県のデータを取り除く
-  const unselectAllPrefs = () => {};
+  const unselectAllPrefs = () => {
+    setSelectedPrefs([]);
+    setPopulationData([]);
+  };
 
   return (
     <ResasContext.Provider
@@ -149,7 +177,10 @@ export function ResasProvider({ children }: ResasProviderProps) {
         fetchPopulationData,
         populationData,
         removePopulationData,
-        isChartLoading,
+        isPopulationDataLoading,
+
+        selectAllPrefs,
+        unselectAllPrefs,
       }}
     >
       {children}

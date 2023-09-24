@@ -13,10 +13,12 @@ const Pref = ({ pref }: Props) => {
     fetchPopulationData,
     populationData,
     removePopulationData,
+    selectedPrefs,
   } = useResas();
   return (
     <div className={styles.stateContainer}>
       <input
+        checked={selectedPrefs.includes(pref) ? true : false}
         id={pref.prefName}
         type="checkbox"
         className={styles.input}
@@ -24,8 +26,9 @@ const Pref = ({ pref }: Props) => {
           const keys = populationData.map((data) => {
             return Object.keys(data)[0];
           });
+          console.log(`keys: `, keys)
           if (keys.includes(pref.prefName)) {
-            removeFromSelectedPref(pref)
+            removeFromSelectedPref(pref);
             removePopulationData(pref);
           } else {
             addToSelectedPrefs(pref);

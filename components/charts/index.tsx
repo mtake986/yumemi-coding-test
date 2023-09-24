@@ -7,18 +7,14 @@ import { TypeSeries } from "@/contexts/type";
 import { tabValues } from "@/public/constants";
 
 const PopulationComposition = () => {
-  const {
-    populationData,
-    currentTab,
-    selectedPrefs,
-    isChartLoading,
-  } = useResas();
+  const { populationData, currentTab, selectedPrefs, isPopulationDataLoading } =
+    useResas();
 
   if (selectedPrefs.length === 0 && populationData.length === 0) {
     return <div>都道府県を選択してください。</div>;
   }
 
-  if (isChartLoading) {
+  if (isPopulationDataLoading) {
     return <div>データを取得しています。</div>;
   }
 

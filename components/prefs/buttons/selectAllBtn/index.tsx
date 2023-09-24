@@ -1,8 +1,19 @@
 import React from "react";
 import styles from './index.module.css';
+import { useResas } from "@/contexts/ResasContext";
+import { TypePref } from "@/contexts/type";
 
-const SelectAllBtn = () => {
-  return <div className={styles.container}>全選択</div>;
+type Props = {
+  prefs: TypePref[];
+};
+
+const SelectAllBtn = ({prefs}: Props) => {
+  const { selectAllPrefs } = useResas();
+  return (
+    <div className={styles.container} onClick={() => selectAllPrefs(prefs)}>
+      全選択
+    </div>
+  );
 };
 
 export default SelectAllBtn;
