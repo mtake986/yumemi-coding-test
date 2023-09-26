@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import Prefs from "@/components/prefs";
 import styles from "./page.module.css";
 import PopulationComposition from "@/components/charts";

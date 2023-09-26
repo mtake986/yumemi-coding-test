@@ -36,7 +36,7 @@ export type TypePopulations = {
   // data: TypePopulationAndYear[];
 };
 
-export type TypeSeries = {
+export type TypePopulationDataSeries = {
   name: string;
   data: number[];
 };

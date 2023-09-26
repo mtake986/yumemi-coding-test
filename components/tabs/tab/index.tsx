@@ -1,3 +1,4 @@
+'use client'
 import { useResas } from "@/contexts/ResasContext";
 import { TypeTabValue } from "@/contexts/type";
 import React from "react";

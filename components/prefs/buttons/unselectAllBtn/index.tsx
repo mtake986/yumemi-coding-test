@@ -1,18 +1,19 @@
+"use client";
 import React from "react";
 import styles from "./index.module.css";
 import { useResas } from "@/contexts/ResasContext";
 
 const UnselectAllBtn = () => {
-  const { unselectAllPrefs, isPopulationDataLoading, selectedPrefs } =
+  const { unselectAllPrefs, isPopulationDataLoading, populationData } =
     useResas();
 
   return (
     <button
       disabled={
-        isPopulationDataLoading || selectedPrefs.length === 0 ? true : false
+        isPopulationDataLoading || populationData.length === 0 ? true : false
       }
       className={`${styles.container} ${
-        isPopulationDataLoading || selectedPrefs.length === 0
+        isPopulationDataLoading || populationData.length === 0
           ? styles.disable
           : null
       }`}

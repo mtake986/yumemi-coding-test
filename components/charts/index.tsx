@@ -1,17 +1,18 @@
+"use client";
 import React from "react";
 
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useResas } from "@/contexts/ResasContext";
-import { TypeSeries } from "@/contexts/type";
+import { TypePopulationDataSeries } from "@/contexts/type";
 import { tabValues } from "@/public/constants";
-import styles from './index.module.css'
+import styles from "./index.module.css";
+import { ticks } from "@/utils";
 
 const PopulationComposition = () => {
-  const { populationData, currentTab, selectedPrefs, isPopulationDataLoading } =
-    useResas();
+  const { populationData, currentTab, isPopulationDataLoading } = useResas();
 
-  if (selectedPrefs.length === 0 && populationData.length === 0) {
+  if (populationData.length === 0 && populationData.length === 0) {
     return <div>都道府県を選択してください。</div>;
   }
 
@@ -19,7 +20,7 @@ const PopulationComposition = () => {
     return <div className={styles.noData}>データを取得しています。</div>;
   }
 
-  let series: Array<TypeSeries> = [];
+  let series: Array<TypePopulationDataSeries> = [];
   if (populationData) {
     series = populationData.map((eachPref) => {
       const key = Object.keys(eachPref)[0];
@@ -31,13 +32,14 @@ const PopulationComposition = () => {
       };
     });
   }
+
   const options = {
     chart: {
       type: "spline",
+      height: 400,
     },
     title: {
       text: currentTab.jp,
-      // text: 'currentTab.jp',
       align: "left",
     },
 
@@ -48,7 +50,7 @@ const PopulationComposition = () => {
 
     yAxis: {
       title: {
-        text: currentTab.jp,
+        text: `${currentTab.jp} (人)`,
       },
     },
 
@@ -57,15 +59,13 @@ const PopulationComposition = () => {
         rangeDescription: "Range: 1960 to 2020",
       },
       title: {
-        text: "Year",
+        text: "年度",
       },
-      min: 1960, 
-      max: 2020,
-      // categories: {
-      //   categories: populationData[0][Object.keys(populationData[0])[0]][
-      //     currentTab.id
-      //   ].data.map((eachYear) => eachYear.year),
-      // }
+
+      categories: [
+        1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015,
+        2020, 2025, 2030, 2035, 2040, 2045,
+      ],
     },
 
     legend: {
@@ -74,17 +74,38 @@ const PopulationComposition = () => {
       verticalAlign: "middle",
     },
 
+    tooltip: {
+      formatter: function (
+        this: Highcharts.TooltipFormatterContextObject
+      ): string {
+        if (this.y === null || this.y === undefined) {
+          return "";
+        }
+        return (
+          "<b>" +
+          this.series.name +  
+          "</b>  <b>" + 
+          this.x +
+          "</b>年<br/><b>" +
+          this.y.toString().slice(0, -4) +
+          "</b>万" +
+          this.y.toString().slice(-4) +
+          "人"
+        );
+      },
+    },
+
     plotOptions: {
-      series: {
-        label: {
-          connectorAllowed: false,
+      line: {
+        dataLabels: {
+          enabled: true,
         },
-        pointStart: 1980,
-        pointEnd: 2020,
+        enableMouseTracking: false,
       },
     },
 
     series: series,
+
     accessibility: {
       enabled: false,
     },

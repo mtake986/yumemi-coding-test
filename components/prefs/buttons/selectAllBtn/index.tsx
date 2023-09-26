@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import styles from './index.module.css';
 import { useResas } from "@/contexts/ResasContext";
@@ -8,14 +9,14 @@ type Props = {
 };
 
 const SelectAllBtn = ({prefs}: Props) => {
-  const { selectAllPrefs, isPopulationDataLoading, selectedPrefs } = useResas();
+  const { selectAllPrefs, isPopulationDataLoading, populationData } = useResas();
   return (
     <button
       disabled={
-        isPopulationDataLoading || selectedPrefs.length >= 47 ? true : false
+        isPopulationDataLoading || populationData.length >= 47 ? true : false
       }
       className={`${styles.container} ${
-        isPopulationDataLoading || selectedPrefs.length === 47
+        isPopulationDataLoading || populationData.length === 47
           ? styles.disable
           : null
       }`}

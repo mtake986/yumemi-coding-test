@@ -17,9 +17,9 @@ type ResasProviderProps = {
 type ResasContextType = {
   prefs: TypePref[];
   fetchPrefs: () => void;
-  addToSelectedPrefs: (storedPref: TypePref) => void;
-  removeFromSelectedPref: (targetPref: TypePref) => void;
-  selectedPrefs: TypePref[];
+  // addToSelectedPrefs: (storedPref: TypePref) => void;
+  // removeFromSelectedPref: (targetPref: TypePref) => void;
+  // selectedPrefs: TypePref[];
 
   currentTab: TypeTabValue;
   switchTab: (id: number) => void;
@@ -63,18 +63,18 @@ export function ResasProvider({ children }: ResasProviderProps) {
       });
   };
 
-  const removeFromSelectedPref = (targetPref: TypePref) => {
-    setSelectedPrefs((prev) => {
-      return prev.filter(
-        (selectedPref) => selectedPref.prefName !== targetPref.prefName
-      );
-    });
-  };
-  const addToSelectedPrefs = (storedPref: TypePref) => {
-    setSelectedPrefs((prev) => {
-      return [...prev, storedPref];
-    });
-  };
+  // const removeFromSelectedPref = (targetPref: TypePref) => {
+  //   setSelectedPrefs((prev) => {
+  //     return prev.filter(
+  //       (selectedPref) => selectedPref.prefName !== targetPref.prefName
+  //     );
+  //   });
+  // };
+  // const addToSelectedPrefs = (storedPref: TypePref) => {
+  //   setSelectedPrefs((prev) => {
+  //     return [...prev, storedPref];
+  //   });
+  // };
 
   const switchTab = (id: number) => {
     setCurrentTab(tabValues[id]);
@@ -104,7 +104,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
       { headers }
     )
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then((res) => {
@@ -112,42 +111,61 @@ export function ResasProvider({ children }: ResasProviderProps) {
           return [...prev, { [pref.prefName]: res.result.data }];
         });
       })
-      .then(() => setIsPopulationDataLoading(false));
+      .then(() => {
+        // console.log(Object.values(populationData[0])[0][0].data[0]);
+        setIsPopulationDataLoading(false);
+      });
   };
 
   // todo: すべての都道府県のデータを取得する
   const selectAllPrefs = (prefs: TypePref[]) => {
     setIsPopulationDataLoading(true);
 
-    console.log(prefs);
+    // setSelectedPrefs([]);
+    // setPopulationData([]);
+
     for (let i = 0; i < prefs.length; i++) {
       const pref = prefs[i];
-      setSelectedPrefs((prev) => {
-        return [...prev, pref];
-      });
-      fetch(
-        `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-        { headers }
-      )
-        .then((response) => {
-          console.log(response);
-          return response.json();
-        })
-        .then((res) => {
-          setPopulationData((prev) => {
-            return [...prev, { [pref.prefName]: res.result.data }];
+      const keys = Object.keys(populationData);
+
+      if (
+        populationData.some(
+          (eachPref) => Object.keys(eachPref)[0] === pref.prefName
+        )
+      ) {
+        i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null;
+      } else {
+        console.log(pref);
+        fetch(
+          `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
+          { headers }
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((res) => {
+            setPopulationData((prev) => {
+              if (prev.includes({ [pref.prefName]: res.result.data })) {
+                return prev;
+              } else {
+                return [...prev, { [pref.prefName]: res.result.data }];
+              }
+            });
+          })
+          .then(() => {
+            i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null;
           });
-        })
-        .then(() =>
-          i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null
-        );
+      }
     }
   };
 
   // todo: すべての都道府県のデータを取り除く
   const unselectAllPrefs = () => {
-    setSelectedPrefs([]);
+    // console.log(selectedPrefs.length, populationData.length);
+    setIsPopulationDataLoading(true);
+    // setSelectedPrefs([]);
     setPopulationData([]);
+    setIsPopulationDataLoading(false);
   };
 
   return (
@@ -155,9 +173,9 @@ export function ResasProvider({ children }: ResasProviderProps) {
       value={{
         prefs,
         fetchPrefs,
-        addToSelectedPrefs,
-        removeFromSelectedPref,
-        selectedPrefs,
+        // addToSelectedPrefs,
+        // removeFromSelectedPref,
+        // selectedPrefs,
 
         currentTab,
         switchTab,

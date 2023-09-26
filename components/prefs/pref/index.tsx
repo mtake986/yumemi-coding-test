@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import styles from "./pref.module.css";
 import { useResas } from "@/contexts/ResasContext";
 import { TypePref } from "@/contexts/type";
@@ -8,17 +9,25 @@ type Props = {
 };
 const Pref = ({ pref }: Props) => {
   const {
-    addToSelectedPrefs,
-    removeFromSelectedPref,
     fetchPopulationData,
     populationData,
     removePopulationData,
-    selectedPrefs,
+    isPopulationDataLoading,
   } = useResas();
+
   return (
     <div className={styles.stateContainer}>
       <input
-        checked={selectedPrefs.includes(pref) ? true : false}
+        disabled={isPopulationDataLoading}
+        checked={
+          populationData
+            .map((data) => {
+              return Object.keys(data)[0];
+            })
+            .includes(pref.prefName)
+            ? true
+            : false
+        }
         id={pref.prefName}
         type="checkbox"
         className={styles.input}
@@ -26,12 +35,16 @@ const Pref = ({ pref }: Props) => {
           const keys = populationData.map((data) => {
             return Object.keys(data)[0];
           });
-          console.log(`keys: `, keys)
+          console.log(`keys: `, keys);
+          console.log(
+            populationData.map((data) => {
+              return Object.keys(data)[0];
+            })
+            // 'pref: ', pref, "\npopulationData : ", populationData
+          );
           if (keys.includes(pref.prefName)) {
-            removeFromSelectedPref(pref);
             removePopulationData(pref);
           } else {
-            addToSelectedPrefs(pref);
             fetchPopulationData(pref);
           }
         }}

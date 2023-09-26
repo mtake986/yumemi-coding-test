@@ -24,8 +24,7 @@
 
 @media (max-width: 640px) {
   .container {
-    font-size: var(--sm-font-size);
     padding: 4px 8px;
-  font-size: var(--sm-font-size);
+    font-size: var(--xs-font-size);
   }
 }
