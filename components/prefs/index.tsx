@@ -12,6 +12,7 @@ const getPrefs = async () => {
     },
   );
   const data = await res.json();
+
   return data.result;
 };
 
@@ -21,9 +22,9 @@ const Prefs = async () => {
   return (
     <section className={styles.container}>
       <div className={styles.prefs}>
-        {prefs?.map((pref: TypePref, i: number) => (
-          <Pref key={i} pref={pref} />
-        ))}
+        {prefs?.map((pref: TypePref, i: number) => {
+          return <Pref key={i} pref={pref} />;
+        })}
       </div>
       <Buttons prefs={prefs} />
     </section>

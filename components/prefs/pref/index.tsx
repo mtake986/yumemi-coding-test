@@ -20,7 +20,7 @@ const Pref = ({ pref }: Props) => {
   } = useResas();
 
   return (
-    <div className={styles.stateContainer}>
+    <div className={styles.container}>
       <input
         disabled={isPopulationDataLoading}
         checked={

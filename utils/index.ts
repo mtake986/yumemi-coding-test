@@ -6,3 +6,20 @@ for (let i = 0; i < 4; i++) {
     ticks[i].push(j * step);
   }
 }
+
+// export const turnPrefsWithRegion = (prefs: TypePref[]) => {
+//   // Your code logic here
+//   const prefsWithRegion = [];
+//   for (let i = 0; i < prefs.length; i++) {
+//     const pref = prefs[i];
+//     let region = "";
+//     for (let i = 0; i < biPrefsWithRegion.length; i++) {
+//       const currRegion = biPrefsWithRegion[i];
+//       if (currRegion.prefs.includes(pref.prefName)) {
+//         region = currRegion.region;
+//         break;
+//       }
+//     }
+//     prefsWithRegion.push(region);
+//   }
+// };
