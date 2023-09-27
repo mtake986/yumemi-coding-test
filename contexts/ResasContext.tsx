@@ -92,15 +92,11 @@ export function ResasProvider({ children }: ResasProviderProps) {
 
   const removePopulationData = (pref: TypePref) => {
     setIsPopulationDataLoading(true);
-    const keys = populationData.map((data) => {
-      return Object.keys(data)[0];
-    });
     // もしpopulationDataにすでにデータがあれば、取り除く
-    console.log("populationDataにすでにデータがあるから、取り除く");
     setPopulationData(
       populationData.filter(
-        (eachPref) => Object.keys(eachPref)[0] !== pref.prefName
-      )
+        (eachPref) => Object.keys(eachPref)[0] !== pref.prefName,
+      ),
     );
     setIsPopulationDataLoading(false);
   };
@@ -108,21 +104,24 @@ export function ResasProvider({ children }: ResasProviderProps) {
   const fetchPopulationData = (pref: TypePref) => {
     setIsPopulationDataLoading(true);
     // populationDataにデータがないから、取得する
-    console.log("populationDataにデータがないから、取得する");
     fetch(
       `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-      { headers }
+      { headers },
     )
       .then((response) => {
         return response.json();
       })
       .then((res) => {
         setPopulationData((prev) => {
-          return [...prev, { [pref.prefName]: res.result.data }];
+          return [
+            ...prev,
+            {
+              [pref.prefName]: res.result.data,
+            },
+          ];
         });
       })
       .then(() => {
-        // console.log(Object.values(populationData[0])[0][0].data[0]);
         setIsPopulationDataLoading(false);
       });
   };
@@ -138,27 +137,34 @@ export function ResasProvider({ children }: ResasProviderProps) {
       const pref = prefs[i];
       if (!selectedPrefs.includes(pref)) {
         addToSelectedPrefs(pref);
-        console.log(selectedPrefs.length);
       }
       if (
         !populationData.some(
-          (eachPref) => Object.keys(eachPref)[0] === pref.prefName
+          (eachPref) => Object.keys(eachPref)[0] === pref.prefName,
         )
       ) {
-        console.log(pref);
         fetch(
           `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-          { headers }
+          { headers },
         )
           .then((response) => {
             return response.json();
           })
           .then((res) => {
             setPopulationData((prev) => {
-              if (prev.includes({ [pref.prefName]: res.result.data })) {
+              if (
+                prev.includes({
+                  [pref.prefName]: res.result.data,
+                })
+              ) {
                 return prev;
               } else {
-                return [...prev, { [pref.prefName]: res.result.data }];
+                return [
+                  ...prev,
+                  {
+                    [pref.prefName]: res.result.data,
+                  },
+                ];
               }
             });
           })
@@ -171,7 +177,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
 
   // todo: すべての都道府県のデータを取り除く
   const removeAllPrefsPopulationData = () => {
-    // console.log(selectedPrefs.length, populationData.length);
     setIsPopulationDataLoading(true);
     setSelectedPrefs([]);
     setPopulationData([]);
@@ -191,7 +196,7 @@ export function ResasProvider({ children }: ResasProviderProps) {
   const removeFromSelectedPref = (targetPref: TypePref) => {
     setSelectedPrefs((prev) => {
       return prev.filter(
-        (selectedPref) => selectedPref.prefName !== targetPref.prefName
+        (selectedPref) => selectedPref.prefName !== targetPref.prefName,
       );
     });
   };
@@ -203,23 +208,31 @@ export function ResasProvider({ children }: ResasProviderProps) {
         const pref = selectedPrefs[i];
         if (
           !populationData.some(
-            (eachPref) => Object.keys(eachPref)[0] === pref.prefName
+            (eachPref) => Object.keys(eachPref)[0] === pref.prefName,
           )
         ) {
-          console.log(pref);
           fetch(
             `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-            { headers }
+            { headers },
           )
             .then((response) => {
               return response.json();
             })
             .then((res) => {
               setPopulationData((prev) => {
-                if (prev.includes({ [pref.prefName]: res.result.data })) {
+                if (
+                  prev.includes({
+                    [pref.prefName]: res.result.data,
+                  })
+                ) {
                   return prev;
                 } else {
-                  return [...prev, { [pref.prefName]: res.result.data }];
+                  return [
+                    ...prev,
+                    {
+                      [pref.prefName]: res.result.data,
+                    },
+                  ];
                 }
               });
             })
