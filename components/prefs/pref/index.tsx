@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect } from "react";
 import styles from "./pref.module.css";
 import { useResas } from "@/contexts/ResasContext";
 import { TypePref } from "@/contexts/type";
@@ -49,12 +48,6 @@ const Pref = ({ pref }: Props) => {
           const keys = populationData.map((data) => {
             return Object.keys(data)[0];
           });
-          console.log(`keys: `, keys);
-          console.log(
-            populationData.map((data) => {
-              return Object.keys(data)[0];
-            })
-          );
           if (keys.includes(pref.prefName)) {
             removePopulationData(pref);
           } else {

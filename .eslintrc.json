@@ -1,8 +1,20 @@
 {
-  "extends": ["plugin:@tanstack/eslint-plugin-query/recommended", "next/core-web-vitals"],
-  "plugins": ["@tanstack/query"],
+  "env": {
+    "browser": true, // window, alert
+    "node": true, // process
+    "es6": true // process
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module" // import/export
+  },
   "rules": {
-    "@tanstack/query/exhaustive-deps": "error",
-    "@tanstack/query/prefer-query-object-syntax": "error"
-  }
+    "no-console": ["error"],
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "indent": ["error", 2],
+    "no-unused-vars": ["warn"],
+    "camelcase": ["warn"]
+  },
+  "extends": ["next/core-web-vitals"]
 }

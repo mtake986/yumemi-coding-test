@@ -7,7 +7,6 @@ import { useResas } from "@/contexts/ResasContext";
 import { TypePopulationDataSeries } from "@/contexts/type";
 import { tabValues } from "@/public/constants";
 import styles from "./index.module.css";
-import { ticks } from "@/utils";
 
 const PopulationComposition = () => {
   const {
@@ -20,7 +19,7 @@ const PopulationComposition = () => {
   if (isMultipleSelectMode) {
     return (
       <div>
-        複数選択中です。確定ボタンをクリックすると、データを取得しグラフが表示されます。
+        複数選択中です。確定ボタンをクリックすると、データを取得し、グラフが表示されます。
       </div>
     );
   }
@@ -39,7 +38,7 @@ const PopulationComposition = () => {
       return {
         name: key,
         data: eachPref[key][currentTab.id].data.map(
-          (eachYear) => eachYear.value
+          (eachYear) => eachYear.value,
         ),
       };
     });
@@ -88,7 +87,7 @@ const PopulationComposition = () => {
 
     tooltip: {
       formatter: function (
-        this: Highcharts.TooltipFormatterContextObject
+        this: Highcharts.TooltipFormatterContextObject,
       ): string {
         if (this.y === null || this.y === undefined) {
           return "";

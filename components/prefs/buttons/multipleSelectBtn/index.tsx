@@ -2,7 +2,6 @@
 import React from "react";
 import styles from "./index.module.css";
 import { useResas } from "@/contexts/ResasContext";
-import { TypePref } from "@/contexts/type";
 
 const MultipleSelectBtn = () => {
   const {

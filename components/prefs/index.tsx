@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
 import Pref from "./pref";
 import styles from "./prefs.module.css";
 import { TypePref } from "@/contexts/type";
 import { headers } from "@/config/config";
 import Buttons from "./buttons";
-import { useResas } from "@/contexts/ResasContext";
-import type { FC } from "react";
 
 const getPrefs = async () => {
   const res = await fetch(
     "https://opendata.resas-portal.go.jp/api/v1/prefectures",
     {
       headers,
-    }
+    },
   );
   const data = await res.json();
   return data.result;
@@ -28,7 +25,7 @@ const Prefs = async () => {
           <Pref key={i} pref={pref} />
         ))}
       </div>
-      <Buttons prefs = {prefs} />
+      <Buttons prefs={prefs} />
     </section>
   );
 };
