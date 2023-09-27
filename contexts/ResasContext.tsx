@@ -29,10 +29,18 @@ type ResasContextType = {
   removePopulationData: (pref: TypePref) => void;
   isPopulationDataLoading: boolean;
 
-  selectAllPrefs: (prefs: TypePref[]) => void;
-  unselectAllPrefs: () => void;
+  fetchAllPrefsPopulationData: (prefs: TypePref[]) => void;
+  removeAllPrefsPopulationData: () => void;
 
   setPrefs: (prefs: TypePref[]) => void;
+
+  toggleMultipleSelectMode: () => void;
+  isMultipleSelectMode: boolean;
+
+  addToSelectedPrefs: (targetPref: TypePref) => void;
+  removeFromSelectedPref: (targetPref: TypePref) => void;
+  selectedPrefs: TypePref[];
+  fetchSelectedPrefsPopulationData: (selectedPrefs: TypePref[]) => void;
 };
 
 const ResasContext = createContext({} as ResasContextType);
@@ -49,6 +57,8 @@ export function ResasProvider({ children }: ResasProviderProps) {
   const [populationData, setPopulationData] = useState<TypePopulations[]>([]);
 
   const [isPopulationDataLoading, setIsPopulationDataLoading] =
+    useState<boolean>(false);
+  const [isMultipleSelectMode, setIsMultipleSelectMode] =
     useState<boolean>(false);
 
   const fetchPrefs = () => {
@@ -118,7 +128,7 @@ export function ResasProvider({ children }: ResasProviderProps) {
   };
 
   // todo: すべての都道府県のデータを取得する
-  const selectAllPrefs = (prefs: TypePref[]) => {
+  const fetchAllPrefsPopulationData = (prefs: TypePref[]) => {
     setIsPopulationDataLoading(true);
 
     // setSelectedPrefs([]);
@@ -126,15 +136,15 @@ export function ResasProvider({ children }: ResasProviderProps) {
 
     for (let i = 0; i < prefs.length; i++) {
       const pref = prefs[i];
-      const keys = Object.keys(populationData);
-
+      if (!selectedPrefs.includes(pref)) {
+        addToSelectedPrefs(pref);
+        console.log(selectedPrefs.length);
+      }
       if (
-        populationData.some(
+        !populationData.some(
           (eachPref) => Object.keys(eachPref)[0] === pref.prefName
         )
       ) {
-        i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null;
-      } else {
         console.log(pref);
         fetch(
           `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
@@ -160,12 +170,67 @@ export function ResasProvider({ children }: ResasProviderProps) {
   };
 
   // todo: すべての都道府県のデータを取り除く
-  const unselectAllPrefs = () => {
+  const removeAllPrefsPopulationData = () => {
     // console.log(selectedPrefs.length, populationData.length);
     setIsPopulationDataLoading(true);
-    // setSelectedPrefs([]);
+    setSelectedPrefs([]);
     setPopulationData([]);
     setIsPopulationDataLoading(false);
+  };
+
+  const toggleMultipleSelectMode = () => {
+    setIsMultipleSelectMode((prev) => !prev);
+  };
+
+  const addToSelectedPrefs = (targetPref: TypePref) => {
+    setSelectedPrefs((prev) => {
+      return [...prev, targetPref];
+    });
+  };
+
+  const removeFromSelectedPref = (targetPref: TypePref) => {
+    setSelectedPrefs((prev) => {
+      return prev.filter(
+        (selectedPref) => selectedPref.prefName !== targetPref.prefName
+      );
+    });
+  };
+
+  const fetchSelectedPrefsPopulationData = (selectedPrefs: TypePref[]) => {
+    if (selectedPrefs.length > 0) {
+      setIsPopulationDataLoading(true);
+      for (let i = 0; i < selectedPrefs.length; i++) {
+        const pref = selectedPrefs[i];
+        if (
+          !populationData.some(
+            (eachPref) => Object.keys(eachPref)[0] === pref.prefName
+          )
+        ) {
+          console.log(pref);
+          fetch(
+            `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
+            { headers }
+          )
+            .then((response) => {
+              return response.json();
+            })
+            .then((res) => {
+              setPopulationData((prev) => {
+                if (prev.includes({ [pref.prefName]: res.result.data })) {
+                  return prev;
+                } else {
+                  return [...prev, { [pref.prefName]: res.result.data }];
+                }
+              });
+            })
+            .then(() => {
+              i === selectedPrefs.length - 1
+                ? setIsPopulationDataLoading(false)
+                : null;
+            });
+        }
+      }
+    }
   };
 
   return (
@@ -185,9 +250,17 @@ export function ResasProvider({ children }: ResasProviderProps) {
         removePopulationData,
         isPopulationDataLoading,
 
-        selectAllPrefs,
-        unselectAllPrefs,
+        fetchAllPrefsPopulationData,
+        removeAllPrefsPopulationData,
         setPrefs,
+
+        toggleMultipleSelectMode,
+        isMultipleSelectMode,
+
+        addToSelectedPrefs,
+        removeFromSelectedPref,
+        selectedPrefs,
+        fetchSelectedPrefsPopulationData,
       }}
     >
       {children}

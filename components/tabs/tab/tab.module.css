@@ -15,8 +15,8 @@
 
 .container.selected {
   opacity: 1;
-  background: var(--accent-color);
-  color: var(--second-accent-color);
+  background: var(--secondary-accent-color);
+  color: var(--primary-accent-color);
 }
 .container.selected:hover {
   opacity: 1;
@@ -24,7 +24,7 @@
 
 @media (max-width: 640px) {
   .container {
-    padding: 4px 8px;
-    font-size: var(--xs-font-size);
+    padding: 4px 6px;
+    font-size: var(--sm-font-size);
   }
 }

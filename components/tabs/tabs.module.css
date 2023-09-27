@@ -4,4 +4,6 @@
   align-items: center;
   gap: 4px;
   margin: 20px auto;
+  justify-content: center;
 }
+

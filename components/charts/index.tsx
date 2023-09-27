@@ -10,14 +10,26 @@ import styles from "./index.module.css";
 import { ticks } from "@/utils";
 
 const PopulationComposition = () => {
-  const { populationData, currentTab, isPopulationDataLoading } = useResas();
+  const {
+    populationData,
+    currentTab,
+    isPopulationDataLoading,
+    isMultipleSelectMode,
+  } = useResas();
 
-  if (populationData.length === 0 && populationData.length === 0) {
-    return <div>都道府県を選択してください。</div>;
+  if (isMultipleSelectMode) {
+    return (
+      <div>
+        複数選択中です。確定ボタンをクリックすると、データを取得しグラフが表示されます。
+      </div>
+    );
   }
 
   if (isPopulationDataLoading) {
     return <div className={styles.noData}>データを取得しています。</div>;
+  }
+  if (populationData.length === 0 && !isPopulationDataLoading) {
+    return <div>都道府県を選択してください。</div>;
   }
 
   let series: Array<TypePopulationDataSeries> = [];
@@ -83,8 +95,8 @@ const PopulationComposition = () => {
         }
         return (
           "<b>" +
-          this.series.name +  
-          "</b>  <b>" + 
+          this.series.name +
+          "</b>  <b>" +
           this.x +
           "</b>年<br/><b>" +
           this.y.toString().slice(0, -4) +

@@ -13,6 +13,11 @@ const Pref = ({ pref }: Props) => {
     populationData,
     removePopulationData,
     isPopulationDataLoading,
+    isMultipleSelectMode,
+
+    addToSelectedPrefs,
+    removeFromSelectedPref,
+    selectedPrefs,
   } = useResas();
 
   return (
@@ -20,6 +25,7 @@ const Pref = ({ pref }: Props) => {
       <input
         disabled={isPopulationDataLoading}
         checked={
+          selectedPrefs.includes(pref) ||
           populationData
             .map((data) => {
               return Object.keys(data)[0];
@@ -32,6 +38,14 @@ const Pref = ({ pref }: Props) => {
         type="checkbox"
         className={styles.input}
         onChange={() => {
+          if (selectedPrefs.includes(pref)) {
+            removeFromSelectedPref(pref);
+          } else {
+            addToSelectedPrefs(pref);
+          }
+          if (isMultipleSelectMode) {
+            return;
+          }
           const keys = populationData.map((data) => {
             return Object.keys(data)[0];
           });
@@ -40,7 +54,6 @@ const Pref = ({ pref }: Props) => {
             populationData.map((data) => {
               return Object.keys(data)[0];
             })
-            // 'pref: ', pref, "\npopulationData : ", populationData
           );
           if (keys.includes(pref.prefName)) {
             removePopulationData(pref);

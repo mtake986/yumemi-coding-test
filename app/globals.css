@@ -18,10 +18,10 @@
 
   /* colors */
   --light-gray: #f5f5f5;
-  --primary-color: rgb(250, 254, 255);
-  --secondary-color: rgb(217, 235, 254);
-  --accent-color: #ffe0e0;
-  --second-accent-color: #C70039;
+  --primary-accent-color: rgb(0, 0, 255);
+  --secondary-accent-color: rgb(217, 235, 254);
+  --red-color: rgb(255, 32, 32);
+  --light-red-color: rgb(255, 240, 240);
 }
 
 /*

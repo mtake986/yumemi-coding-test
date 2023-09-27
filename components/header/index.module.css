@@ -1,7 +1,7 @@
 .header {
   font-size: var(--xxl-font-size);
   font-weight: 600;
-  background-color: var(--secondary-color);;
+  background-color: var(--secondary-accent-color);;
   text-align: left;
 }
 

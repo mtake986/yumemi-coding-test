@@ -4,8 +4,11 @@ import styles from "./index.module.css";
 import { useResas } from "@/contexts/ResasContext";
 
 const UnselectAllBtn = () => {
-  const { unselectAllPrefs, isPopulationDataLoading, populationData } =
-    useResas();
+  const {
+    removeAllPrefsPopulationData,
+    isPopulationDataLoading,
+    populationData,
+  } = useResas();
 
   return (
     <button
@@ -17,7 +20,7 @@ const UnselectAllBtn = () => {
           ? styles.disable
           : null
       }`}
-      onClick={unselectAllPrefs}
+      onClick={removeAllPrefsPopulationData}
     >
       全解除
     </button>
