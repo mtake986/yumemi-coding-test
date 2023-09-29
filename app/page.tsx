@@ -5,11 +5,10 @@ import PopulationComposition from "@/components/charts";
 import Tabs from "@/components/tabs";
 import Header from "@/components/header";
 
-
 export default function HomePage() {
-
   return (
     <div className={styles.container}>
+      <div>test</div>
       <Header />
       <section className={styles.main}>
         <Prefs />
