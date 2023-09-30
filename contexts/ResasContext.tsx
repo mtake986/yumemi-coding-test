@@ -6,6 +6,7 @@ import {
   TypePrefWithRegion,
   TypeTabValue,
 } from "./type";
+
 import { tabValues } from "@/public/constants";
 
 type ResasProviderProps = {
@@ -13,6 +14,15 @@ type ResasProviderProps = {
 };
 
 type ResasContextType = {
+  prefs: TypePref[];
+  fetchPrefs: () => void;
+  // addToSelectedPrefs: (storedPref: TypePref) => void;
+  // removeFromSelectedPref: (targetPref: TypePref) => void;
+  // selectedPrefs: TypePref[];
+
+  currentTab: TypeTabValue;
+  switchTab: (id: number) => void;
+
   fetchPopulationData: (pref: TypePref) => void;
   populationData: TypePopulations[];
   removePopulationData: (pref: TypePref) => void;
@@ -49,6 +59,38 @@ export function ResasProvider({ children }: ResasProviderProps) {
     useState<boolean>(false);
   const [isMultipleSelectMode, setIsMultipleSelectMode] =
     useState<boolean>(false);
+
+  const fetchPrefs = () => {
+    // 47都道府県の一覧を取得
+    // API Doc: https://opendata.resas-portal.go.jp/docs/api/v1/prefectures.html
+    fetch("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
+      headers: new Headers({
+        "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
+        "Content-Type": process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        setPrefs(res.result);
+      });
+  };
+
+  // const removeFromSelectedPref = (targetPref: TypePref) => {
+  //   setSelectedPrefs((prev) => {
+  //     return prev.filter(
+  //       (selectedPref) => selectedPref.prefName !== targetPref.prefName
+  //     );
+  //   });
+  // };
+  // const addToSelectedPrefs = (storedPref: TypePref) => {
+  //   setSelectedPrefs((prev) => {
+  //     return [...prev, storedPref];
+  //   });
+  // };
+
+  const switchTab = (id: number) => {
+    setCurrentTab(tabValues[id]);
+  };
 
   const removePopulationData = (pref: TypePref) => {
     setIsPopulationDataLoading(true);
@@ -225,6 +267,15 @@ export function ResasProvider({ children }: ResasProviderProps) {
   return (
     <ResasContext.Provider
       value={{
+        prefs,
+        fetchPrefs,
+        // addToSelectedPrefs,
+        // removeFromSelectedPref,
+        // selectedPrefs,
+
+        currentTab,
+        switchTab,
+
         fetchPopulationData,
         populationData,
         removePopulationData,

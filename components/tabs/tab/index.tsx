@@ -3,15 +3,14 @@ import { TypeTabValue } from "@/contexts/type";
 import React from "react";
 import styles from "./tab.module.css";
 import useFetch from "@/hooks/useFetch";
-import useCurrentTab from "@/hooks/useCurrentTab";
+import { useResas } from "@/contexts/ResasContext";
 
 type Props = {
   tabValue: TypeTabValue;
-  currentTab: TypeTabValue;
-  switchTab: (id: number) => void;
 };
 
-const Tab = ({ tabValue, currentTab, switchTab }: Props) => {
+const Tab = ({ tabValue }: Props) => {
+  const { currentTab, switchTab } = useResas();
   return (
     <button
       data-testid="tab"

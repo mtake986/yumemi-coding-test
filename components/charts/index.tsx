@@ -7,13 +7,14 @@ import { useResas } from "@/contexts/ResasContext";
 import { TypePopulationDataSeries } from "@/contexts/type";
 import { tabValues } from "@/public/constants";
 import styles from "./index.module.css";
-import useCurrentTab from "@/hooks/useCurrentTab";
 
 const PopulationChart = () => {
-  const { populationData, isPopulationDataLoading, isMultipleSelectMode } =
-    useResas();
-
-  const { currentTab } = useCurrentTab();
+  const {
+    populationData,
+    isPopulationDataLoading,
+    isMultipleSelectMode,
+    currentTab,
+  } = useResas();
 
   if (isMultipleSelectMode) {
     return (
