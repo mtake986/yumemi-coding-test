@@ -40,6 +40,7 @@ const PopulationChart = () => {
         data: eachPref[key][currentTab.id].data.map(
           (eachYear) => eachYear.value,
         ),
+        comparison: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       };
     });
   }

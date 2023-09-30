@@ -40,4 +40,5 @@ export type TypePopulations = {
 export type TypePopulationDataSeries = {
   name: string;
   data: number[];
+  comparison: number[];
 };
