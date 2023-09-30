@@ -65,7 +65,10 @@ export function ResasProvider({ children }: ResasProviderProps) {
     // 47都道府県の一覧を取得
     // API Doc: https://opendata.resas-portal.go.jp/docs/api/v1/prefectures.html
     fetch("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
-      headers,
+      headers: new Headers({
+        "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
+        "Content-Type": process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
+      }),
     })
       .then((response) => response.json())
       .then((res) => {
@@ -106,7 +109,12 @@ export function ResasProvider({ children }: ResasProviderProps) {
     // populationDataにデータがないから、取得する
     fetch(
       `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-      { headers },
+      {
+        headers: new Headers({
+          "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
+          "Content-Type": process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
+        }),
+      },
     )
       .then((response) => {
         return response.json();
@@ -145,7 +153,12 @@ export function ResasProvider({ children }: ResasProviderProps) {
       ) {
         fetch(
           `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-          { headers },
+          {
+            headers: new Headers({
+              "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
+              "Content-Type": process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
+            }),
+          },
         )
           .then((response) => {
             return response.json();
@@ -213,7 +226,13 @@ export function ResasProvider({ children }: ResasProviderProps) {
         ) {
           fetch(
             `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-            { headers },
+            {
+              headers: new Headers({
+                "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
+                "Content-Type":
+                  process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
+              }),
+            },
           )
             .then((response) => {
               return response.json();

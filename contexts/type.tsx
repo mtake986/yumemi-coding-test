@@ -19,6 +19,7 @@ export type TypeTabValue = {
   id: number;
   en: string;
   jp: string;
+  subtitle?: string;
 };
 export type TypeSpecificPopulationAndYear = {
   year: number;

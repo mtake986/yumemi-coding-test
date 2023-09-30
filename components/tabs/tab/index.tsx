@@ -12,6 +12,7 @@ const Tab = ({ tabValue }: Props) => {
   const { currentTab, switchTab } = useResas();
   return (
     <button
+      data-testid="tab"
       disabled={currentTab.id === tabValue.id ? true : false}
       className={`${styles.container} ${
         currentTab.id === tabValue.id ? styles.selected : null
