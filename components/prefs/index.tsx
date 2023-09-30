@@ -10,6 +10,7 @@ const Prefs = () => {
   const { data, isPending, error } = useFetch(
     "https://opendata.resas-portal.go.jp/api/v1/prefectures",
   );
+
   return (
     <section className={styles.container}>
       {error ? (
