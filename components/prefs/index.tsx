@@ -1,32 +1,31 @@
+"use client";
 import Pref from "./pref";
 import styles from "./prefs.module.css";
 import { TypePref } from "@/contexts/type";
 import { headers } from "@/config/config";
 import Buttons from "./buttons";
+import useFetch from "@/hooks/useFetch";
 
-const getPrefs = async () => {
-  const res = await fetch(
+const Prefs = () => {
+  const { data, isPending, error } = useFetch(
     "https://opendata.resas-portal.go.jp/api/v1/prefectures",
-    {
-      headers,
-    },
   );
-  const data = await res.json();
-
-  return data.result;
-};
-
-const Prefs = async () => {
-  const prefs = await getPrefs();
-
   return (
     <section className={styles.container}>
-      <div className={styles.prefs}>
-        {prefs?.map((pref: TypePref, i: number) => {
-          return <Pref key={i} pref={pref} />;
-        })}
-      </div>
-      <Buttons prefs={prefs} />
+      {error ? (
+        <div className={styles.error}>{error}</div>
+      ) : isPending ? (
+        <div>都道府県を取得中です</div>
+      ) : data ? (
+        <>
+          <div className={styles.prefs}>
+            {data?.map((pref: TypePref, i: number) => {
+              return <Pref key={i} pref={pref} />;
+            })}
+          </div>
+          <Buttons prefs={data} />
+        </>
+      ) : null}
     </section>
   );
 };
