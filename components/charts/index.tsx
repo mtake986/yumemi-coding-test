@@ -25,7 +25,7 @@ const PopulationChart = () => {
   }
 
   if (isPopulationDataLoading) {
-    return <div className={styles.noData}>データを取得しています。</div>;
+    return <div className={styles.fetching}>データを取得しています。</div>;
   }
   if (populationData.length === 0 && !isPopulationDataLoading) {
     return <div>都道府県を選択してください。</div>;

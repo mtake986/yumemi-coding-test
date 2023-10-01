@@ -14,7 +14,7 @@
 
 
 @media (max-width: 640px) {
-  .stateContainer {
+  .container {
     font-size: var(--sm-font-size);
   }
 }

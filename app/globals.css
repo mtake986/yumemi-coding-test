@@ -22,6 +22,8 @@
   --secondary-accent-color: rgb(217, 235, 254);
   --red-color: rgb(255, 32, 32);
   --light-red-color: rgb(255, 240, 240);
+
+  --padding-button: '4px 8px';
 }
 
 /*
