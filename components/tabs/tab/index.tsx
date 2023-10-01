@@ -2,7 +2,6 @@
 import { TypeTabValue } from "@/contexts/type";
 import React from "react";
 import styles from "./tab.module.css";
-import useFetch from "@/hooks/useFetch";
 import { useResas } from "@/contexts/ResasContext";
 
 type Props = {

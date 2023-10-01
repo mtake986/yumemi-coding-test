@@ -2,7 +2,6 @@
 import Pref from "./pref";
 import styles from "./prefs.module.css";
 import { TypePref } from "@/contexts/type";
-import { headers } from "@/config/config";
 import Buttons from "./buttons";
 import useFetch from "@/hooks/useFetch";
 

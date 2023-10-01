@@ -27,14 +27,10 @@ export type TypeSpecificPopulationAndYear = {
 };
 
 export type TypePopulations = {
-  // [prefCode: number]: [{ label: string; data: TypePopulationAndYear[] }];
   [prefName: string]: Array<{
     label: string;
     data: Array<TypeSpecificPopulationAndYear>;
   }>;
-
-  // label: string;
-  // data: TypePopulationAndYear[];
 };
 
 export type TypePopulationDataSeries = {
