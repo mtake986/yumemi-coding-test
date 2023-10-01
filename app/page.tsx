@@ -6,8 +6,6 @@ import Tabs from "@/components/tabs";
 import Header from "@/components/header";
 
 export default function HomePage() {
-  // const { populationData, isPopulationDataLoading, isMultipleSelectMode } =
-
   return (
     <div className={styles.container}>
       <Header />

@@ -1,11 +1,6 @@
 "use client";
 import { ReactNode, useContext, createContext, useState } from "react";
-import {
-  TypePopulations,
-  TypePref,
-  TypePrefWithRegion,
-  TypeTabValue,
-} from "./type";
+import { TypePopulations, TypePref, TypeTabValue } from "./type";
 
 import { tabValues } from "@/public/constants";
 
@@ -16,9 +11,6 @@ type ResasProviderProps = {
 type ResasContextType = {
   prefs: TypePref[];
   fetchPrefs: () => void;
-  // addToSelectedPrefs: (storedPref: TypePref) => void;
-  // removeFromSelectedPref: (targetPref: TypePref) => void;
-  // selectedPrefs: TypePref[];
 
   currentTab: TypeTabValue;
   switchTab: (id: number) => void;
@@ -74,19 +66,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
         setPrefs(res.result);
       });
   };
-
-  // const removeFromSelectedPref = (targetPref: TypePref) => {
-  //   setSelectedPrefs((prev) => {
-  //     return prev.filter(
-  //       (selectedPref) => selectedPref.prefName !== targetPref.prefName
-  //     );
-  //   });
-  // };
-  // const addToSelectedPrefs = (storedPref: TypePref) => {
-  //   setSelectedPrefs((prev) => {
-  //     return [...prev, storedPref];
-  //   });
-  // };
 
   const switchTab = (id: number) => {
     setCurrentTab(tabValues[id]);
@@ -269,9 +248,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
       value={{
         prefs,
         fetchPrefs,
-        // addToSelectedPrefs,
-        // removeFromSelectedPref,
-        // selectedPrefs,
 
         currentTab,
         switchTab,
