@@ -1,13 +1,11 @@
 import React from "react";
 import styles from "./index.module.css";
-
-const Header = () => {
+type Props = {
+  title: string;
+}
+const Header = ({title}: Props) => {
   return (
-    <header className={styles.header}>
-      <div className={styles.inner}>
-        <p className={styles.title}>都道府県別の人口推移</p>
-      </div>
-    </header>
+    <h1 className="headerTitle">{title}</h1>
   );
 };
 

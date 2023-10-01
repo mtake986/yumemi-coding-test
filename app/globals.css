@@ -3,10 +3,10 @@
 
 :root {
   --color-black: #222;
-  --sm: '640px';
-  --md: '768px';
-  --lg: '1024px';
-  --xl: '1280px'; 
+  --sm-width: 640px;
+  --md-width: 768px;
+  --lg-width: 1024px;
+  --xl-width: 1280px; 
 
   --xs-font-size: 10px;
   --sm-font-size: 0.8rem;
