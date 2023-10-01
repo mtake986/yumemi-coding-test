@@ -18,7 +18,7 @@ const PopulationChart = () => {
 
   if (isMultipleSelectMode) {
     return (
-      <div>
+      <div className={styles.textWhenMultipleSelectMode}>
         複数選択中です。確定ボタンをクリックすると、データを取得し、グラフが表示されます。
       </div>
     );
@@ -28,7 +28,7 @@ const PopulationChart = () => {
     return <div className={styles.fetching}>データを取得しています。</div>;
   }
   if (populationData.length === 0 && !isPopulationDataLoading) {
-    return <div>都道府県を選択してください。</div>;
+    return <div className={styles.beforeFetching}>都道府県を選択してください。</div>;
   }
 
   let series: Array<TypePopulationDataSeries> = [];
@@ -48,7 +48,7 @@ const PopulationChart = () => {
   const options = {
     chart: {
       type: "spline",
-      height: 400,
+      height: 700,
     },
     title: {
       text: currentTab.jp,
@@ -125,7 +125,7 @@ const PopulationChart = () => {
       rules: [
         {
           condition: {
-            maxWidth: 500,
+            maxWidth: 768,
           },
           chartOptions: {
             legend: {
