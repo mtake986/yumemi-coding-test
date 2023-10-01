@@ -25,6 +25,7 @@
 ## プロジェクトについて
 
 1960~2045年の間の各都道府県の人口推移をグラフで表示するアプリです。各都道府県にチェックマークをいれることで、その都道府県の人口の増減を一目で把握することができます。総人口だけでなく、その都道府県の年少人口・生産年齢人口・老年人口も画面中央のボタンで切り替えれます。
+具体的なアプリ画面↓
 ![アプリ画面](./public/images/appHomePage.png "アプリ画面")
 <!-- <p align="right">(<a href="#top">トップへ</a>)</p> -->
 
@@ -45,9 +46,11 @@
 [Node.js](https://nodejs.org/en)が必須です。
 
 1. [レポジトリ](https://github.com/mtake986/yumemi-coding-test)にアクセスして、画面右上の緑色の`<>Code`ボタンをクリック
+参考画像↓
 ![緑色のCodeボタン](./public/images/greenCodeBtn.png "緑色のCodeボタン")
 2. `Download ZIP`をクリックして、zipファイルをダウンロード。
 もしくは、自身PCのターミナル（コマンドライン）にて`git clone HTTPSの下に表示されてる(https://github...)をコピペ`でクローンする
+参考画像↓
 ![緑色のCodeボタンをクリックした後](./public/images/afterCodeBtnClicked.png "緑色のCodeボタンをクリックした後")
 3. フォルダーに移動し、ターミナルで `npm i`を打ち、Enter。さらに`npm run dev` と打ち、Enter
 4. ターミナルに表示されているリンク（例えば、http://localhost:3000/ ） にアクセスできるか確認。アクセスできたら成功
