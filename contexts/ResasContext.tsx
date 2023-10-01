@@ -6,9 +6,8 @@ import {
   TypePrefWithRegion,
   TypeTabValue,
 } from "./type";
-import { useSearchParams } from "react-router-dom";
+
 import { tabValues } from "@/public/constants";
-import { headers } from "@/config/config";
 
 type ResasProviderProps = {
   children: ReactNode;

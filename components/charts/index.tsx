@@ -8,12 +8,12 @@ import { TypePopulationDataSeries } from "@/contexts/type";
 import { tabValues } from "@/public/constants";
 import styles from "./index.module.css";
 
-const PopulationComposition = () => {
+const PopulationChart = () => {
   const {
     populationData,
-    currentTab,
     isPopulationDataLoading,
     isMultipleSelectMode,
+    currentTab,
   } = useResas();
 
   if (isMultipleSelectMode) {
@@ -40,6 +40,7 @@ const PopulationComposition = () => {
         data: eachPref[key][currentTab.id].data.map(
           (eachYear) => eachYear.value,
         ),
+        comparison: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       };
     });
   }
@@ -145,4 +146,4 @@ const PopulationComposition = () => {
   );
 };
 
-export default PopulationComposition;
+export default PopulationChart;

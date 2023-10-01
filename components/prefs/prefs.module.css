@@ -13,3 +13,8 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+
+.error {
+  color: var(--red-color);
+  background-color: var(--light-red-color);
+}

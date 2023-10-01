@@ -1,7 +1,7 @@
 "use client";
 import styles from "./pref.module.css";
 import { useResas } from "@/contexts/ResasContext";
-import { TypePref } from "@/contexts/type";
+import { TypePopulations, TypePref } from "@/contexts/type";
 
 type Props = {
   pref: TypePref;
