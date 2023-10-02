@@ -15,8 +15,7 @@ export const tabValues = [
     id: 2,
     en: "WorkingAgePopulation",
     jp: "生産年齢人口",
-    subtitle:
-      "国内の生産活動を中心となって支える人口のこと。 経済協力開発機構（OECD）は15～64歳の人口と定義している。 労働力の中核として経済に活力を生み出す存在であり、社会保障を支えている。",
+    subtitle: "15~64歳の人口 (経済協力開発機構(OECD)",
   },
   {
     id: 3,

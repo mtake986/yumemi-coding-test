@@ -20,19 +20,10 @@ const Pref = ({ pref }: Props) => {
   } = useResas();
 
   return (
-    <div className={styles.container}>
+    <li className={styles.container}>
       <input
         disabled={isPopulationDataLoading}
-        checked={
-          selectedPrefs.includes(pref) ||
-          populationData
-            .map((data) => {
-              return Object.keys(data)[0];
-            })
-            .includes(pref.prefName)
-            ? true
-            : false
-        }
+        checked={selectedPrefs.includes(pref)}
         id={pref.prefName}
         type="checkbox"
         className={styles.input}
@@ -42,15 +33,20 @@ const Pref = ({ pref }: Props) => {
           } else {
             addToSelectedPrefs(pref);
           }
-          if (isMultipleSelectMode) {
-            return;
-          }
+
+          // 複数選択中であろうとなかろうと、削除する
           const keys = populationData.map((data) => {
             return Object.keys(data)[0];
           });
           if (keys.includes(pref.prefName)) {
             removePopulationData(pref);
-          } else {
+          }
+          // 複数選択中でなければ、逐一追加
+          // 複数選択中であれば、逐一追加せず、最後にまとめて追加する（multipleSelectBtnで追加）
+          if (!isMultipleSelectMode) {
+            const keys = populationData.map((data) => {
+              return Object.keys(data)[0];
+            });
             fetchPopulationData(pref);
           }
         }}
@@ -58,7 +54,7 @@ const Pref = ({ pref }: Props) => {
       <label className={styles.label} htmlFor={pref.prefName}>
         {pref.prefName}
       </label>
-    </div>
+    </li>
   );
 };
 

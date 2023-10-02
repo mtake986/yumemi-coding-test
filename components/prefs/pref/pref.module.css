@@ -13,7 +13,7 @@
 }
 
 
-@media (max-width: 640px) {
+@media (max-width: 425px) {
   .container {
     font-size: var(--sm-font-size);
   }

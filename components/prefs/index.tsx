@@ -18,11 +18,11 @@ const Prefs = () => {
         <div>都道府県を取得中です</div>
       ) : data ? (
         <>
-          <div className={styles.prefs}>
+          <ul className={styles.prefs}>
             {data?.map((pref: TypePref, i: number) => {
               return <Pref key={i} pref={pref} />;
             })}
-          </div>
+          </ul>
           <Buttons prefs={data} />
         </>
       ) : null}
