@@ -72,14 +72,15 @@ export function ResasProvider({ children }: ResasProviderProps) {
   };
 
   const removePopulationData = (pref: TypePref) => {
-    setIsPopulationDataLoading(true);
+    // setIsPopulationDataLoading(true);
     // もしpopulationDataにすでにデータがあれば、取り除く
-    setPopulationData(
-      populationData.filter(
+    setPopulationData(prev => {
+      return prev.filter(
         (eachPref) => Object.keys(eachPref)[0] !== pref.prefName,
-      ),
+        )
+      }
     );
-    setIsPopulationDataLoading(false);
+    // setIsPopulationDataLoading(false);
   };
 
   // チェックボックスが押されたとき、1つの都道府県のデータを取得する

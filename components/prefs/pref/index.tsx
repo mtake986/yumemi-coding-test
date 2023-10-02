@@ -34,7 +34,7 @@ const Pref = ({ pref }: Props) => {
             addToSelectedPrefs(pref);
           }
 
-          // 複数選択中であろうとなかろうと、削除する
+          // 複数選択中であろうとなかろうと、データを削除する
           const keys = populationData.map((data) => {
             return Object.keys(data)[0];
           });
@@ -42,12 +42,14 @@ const Pref = ({ pref }: Props) => {
             removePopulationData(pref);
           }
           // 複数選択中でなければ、逐一追加
-          // 複数選択中であれば、逐一追加せず、最後にまとめて追加する（multipleSelectBtnで追加）
           if (!isMultipleSelectMode) {
-            const keys = populationData.map((data) => {
-              return Object.keys(data)[0];
-            });
-            fetchPopulationData(pref);
+            if (!keys.includes(pref.prefName)) {
+              fetchPopulationData(pref);
+            }
+          }
+          // 複数選択中であれば、逐一追加せず、最後にまとめて追加する（SubmitBtnをクリック時）
+          else {
+            return;
           }
         }}
       />

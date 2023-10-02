@@ -1,0 +1,25 @@
+.container {
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+  background: white;
+  font-size: var(--md-font-size);
+}
+
+.container:hover {
+  background-color: var(--light-gray);
+}
+
+.container.disable:hover {
+  background-color: white;
+}
+
+@media (max-width: 425px) {
+  .container {
+    font-size: var(--sm-font-size);
+    padding: 4px 8px;
+  }
+}
