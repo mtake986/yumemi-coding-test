@@ -82,6 +82,7 @@ export function ResasProvider({ children }: ResasProviderProps) {
     setIsPopulationDataLoading(false);
   };
 
+  // チェックボックスが押されたとき、1つの都道府県のデータを取得する
   const fetchPopulationData = (pref: TypePref) => {
     setIsPopulationDataLoading(true);
     // populationDataにデータがないから、取得する
@@ -112,61 +113,56 @@ export function ResasProvider({ children }: ResasProviderProps) {
       });
   };
 
-  // todo: すべての都道府県のデータを取得する
+  // 全選択ボタンが押されたとき、すべての都道府県のデータを取得する
   const fetchAllPrefsPopulationData = (prefs: TypePref[]) => {
     setIsPopulationDataLoading(true);
 
-    // setSelectedPrefs([]);
-    // setPopulationData([]);
-
+    // すでに人口データがある都道府県のときに、for文に入れないようにしたい。
+    // だが、loadingをfalseにするのは、for文の中で最後のデータを取得したときにしたい。
+    // この両立が現時点ではできないため、全都道府県をFetchしてしまっている。
     for (let i = 0; i < prefs.length; i++) {
       const pref = prefs[i];
       if (!selectedPrefs.includes(pref)) {
         addToSelectedPrefs(pref);
       }
-      if (
-        !populationData.some(
-          (eachPref) => Object.keys(eachPref)[0] === pref.prefName,
-        )
-      ) {
-        fetch(
-          `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-          {
-            headers: new Headers({
-              "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
-              "Content-Type": process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
-            }),
-          },
-        )
-          .then((response) => {
-            return response.json();
-          })
-          .then((res) => {
-            setPopulationData((prev) => {
-              if (
-                prev.includes({
+      fetch(
+        `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
+        {
+          headers: new Headers({
+            "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
+            "Content-Type": process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
+          }),
+        },
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((res) => {
+          setPopulationData((prev) => {
+            if (
+              prev.some(
+                (eachPrefData) =>
+                  Object.keys(eachPrefData)[0] === pref.prefName,
+              )
+            ) {
+              return prev;
+            } else {
+              return [
+                ...prev,
+                {
                   [pref.prefName]: res.result.data,
-                })
-              ) {
-                return prev;
-              } else {
-                return [
-                  ...prev,
-                  {
-                    [pref.prefName]: res.result.data,
-                  },
-                ];
-              }
-            });
-          })
-          .then(() => {
-            i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null;
+                },
+              ];
+            }
           });
-      }
+        })
+        .then(() => {
+          i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null;
+        });
     }
   };
 
-  // todo: すべての都道府県のデータを取り除く
+  // すべての都道府県のデータを取り除く
   const removeAllPrefsPopulationData = () => {
     setIsPopulationDataLoading(true);
     setSelectedPrefs([]);
@@ -197,48 +193,45 @@ export function ResasProvider({ children }: ResasProviderProps) {
       setIsPopulationDataLoading(true);
       for (let i = 0; i < selectedPrefs.length; i++) {
         const pref = selectedPrefs[i];
-        if (
-          !populationData.some(
-            (eachPref) => Object.keys(eachPref)[0] === pref.prefName,
-          )
-        ) {
-          fetch(
-            `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
-            {
-              headers: new Headers({
-                "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
-                "Content-Type":
-                  process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
-              }),
-            },
-          )
-            .then((response) => {
-              return response.json();
-            })
-            .then((res) => {
-              setPopulationData((prev) => {
-                if (
-                  prev.includes({
+
+        fetch(
+          `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?&prefCode=${pref.prefCode}`,
+          {
+            headers: new Headers({
+              "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
+              "Content-Type": process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
+            }),
+          },
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((res) => {
+            setPopulationData((prev) => {
+              console.log("inside setPopulationData ----------");
+
+              if (
+                prev.some(
+                  (eachPrefData) =>
+                    Object.keys(eachPrefData)[0] === pref.prefName,
+                )
+              ) {
+                return prev;
+              } else {
+                return [
+                  ...prev,
+                  {
                     [pref.prefName]: res.result.data,
-                  })
-                ) {
-                  return prev;
-                } else {
-                  return [
-                    ...prev,
-                    {
-                      [pref.prefName]: res.result.data,
-                    },
-                  ];
-                }
-              });
-            })
-            .then(() => {
-              i === selectedPrefs.length - 1
-                ? setIsPopulationDataLoading(false)
-                : null;
+                  },
+                ];
+              }
             });
-        }
+          })
+          .then(() => {
+            i === selectedPrefs.length - 1
+              ? setIsPopulationDataLoading(false)
+              : null;
+          });
       }
     }
   };

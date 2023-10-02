@@ -48,7 +48,7 @@ const PopulationChart = () => {
   const options = {
     chart: {
       type: "spline",
-      height: 700,
+      height: 500,
     },
     title: {
       text: currentTab.jp,
