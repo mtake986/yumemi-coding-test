@@ -52,8 +52,7 @@ const Pref = ({ pref }: Props) => {
         }}
       />
       <label className={styles.label} htmlFor={pref.prefName}>
-        {pref.prefName} {"selectedPrefs.length: " + selectedPrefs.length}{" "}
-        {"populationData.length: " + populationData.length}
+        {pref.prefName}
       </label>
     </li>
   );
