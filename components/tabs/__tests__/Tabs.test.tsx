@@ -1,5 +1,5 @@
 // import { render, screen } from "@testing-library/react";
-import { render, screen } from "../../test-utils";
+import { render, screen } from "../../../utils/test-utils";
 import Tabs from "../index";
 import { ResasProvider } from "@/contexts/ResasContext";
 import Tab from "../tab";
@@ -19,7 +19,7 @@ describe("Tabs", () => {
   });
 
   it("should render a tab", () => {
-    render({ ui: <Tab tabValue={tabValues[0]}/> }); // Arrange
+    render({ ui: <Tab tabValue={tabValues[0]} /> }); // Arrange
     const tab = screen.getByRole("button"); // Act
     expect(tab).toBeInTheDocument(); // Assert
   });

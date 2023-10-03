@@ -5,7 +5,7 @@ type Props = {
 }
 const Header = ({title}: Props) => {
   return (
-    <h1 className="headerTitle">{title}</h1>
+    <h1 className={styles.headerTitle}>{title}</h1>
   );
 };
 

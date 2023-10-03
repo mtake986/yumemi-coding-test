@@ -1,4 +1,4 @@
-import Header from "../header";
+import Header from "./header";
 import styles from "./index.module.css";
 
 const Navbar = () => {

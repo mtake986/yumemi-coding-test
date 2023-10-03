@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { ResasProvider } from "../../contexts/ResasContext";
+import { ResasProvider } from "../contexts/ResasContext";
 import { ReactElement } from "react";
 
 type customRenderType = {

@@ -1,9 +1,9 @@
 // "use client";
-import Prefs from "@/app/components/prefs";
+import Prefs from "@/components/prefs";
 import styles from "./page.module.css";
-import PopulationChart from "@/app/components/charts";
-import Tabs from "@/app/components/tabs";
-import Navbar from "@/app/components/navbar";
+import PopulationChart from "@/components/charts";
+import Tabs from "@/components/tabs";
+import Navbar from "@/components/navbar";
 
 export default function HomePage() {
   return (
