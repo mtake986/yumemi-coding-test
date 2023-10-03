@@ -72,14 +72,15 @@ export function ResasProvider({ children }: ResasProviderProps) {
   };
 
   const removePopulationData = (pref: TypePref) => {
-    setIsPopulationDataLoading(true);
+    // setIsPopulationDataLoading(true);
     // もしpopulationDataにすでにデータがあれば、取り除く
-    setPopulationData(
-      populationData.filter(
+    setPopulationData(prev => {
+      return prev.filter(
         (eachPref) => Object.keys(eachPref)[0] !== pref.prefName,
-      ),
+        )
+      }
     );
-    setIsPopulationDataLoading(false);
+    // setIsPopulationDataLoading(false);
   };
 
   // チェックボックスが押されたとき、1つの都道府県のデータを取得する
@@ -109,7 +110,9 @@ export function ResasProvider({ children }: ResasProviderProps) {
         });
       })
       .then(() => {
-        setIsPopulationDataLoading(false);
+                    setTimeout(() => {
+                      setIsPopulationDataLoading(false);
+                    }, 500);
       });
   };
 
@@ -157,7 +160,11 @@ export function ResasProvider({ children }: ResasProviderProps) {
           });
         })
         .then(() => {
-          i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null;
+            setTimeout(() => {
+              i === prefs.length - 1
+                ? setIsPopulationDataLoading(false)
+                : null;
+            }, 500);
         });
     }
   };
@@ -208,8 +215,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
           })
           .then((res) => {
             setPopulationData((prev) => {
-              console.log("inside setPopulationData ----------");
-
               if (
                 prev.some(
                   (eachPrefData) =>
@@ -228,9 +233,11 @@ export function ResasProvider({ children }: ResasProviderProps) {
             });
           })
           .then(() => {
-            i === selectedPrefs.length - 1
-              ? setIsPopulationDataLoading(false)
-              : null;
+            setTimeout(() => {
+              i === selectedPrefs.length - 1
+                ? setIsPopulationDataLoading(false)
+                : null;
+            }, 500);
           });
       }
     }

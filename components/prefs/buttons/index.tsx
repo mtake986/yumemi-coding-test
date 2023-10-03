@@ -3,15 +3,27 @@ import SelectAllBtn from "./selectAllBtn";
 import UnselectAllBtn from "./unselectAllBtn";
 import styles from "./buttons.module.css";
 import { TypePref } from "@/contexts/type";
-import MultipleSelectBtn from "./multipleSelectBtn";
+import { useResas } from "@/contexts/ResasContext";
+import SubmitBtn from "./multipleSelect/submitBtn";
+import MultipleSelectOnBtn from "./multipleSelect/MultipleSelectOnBtn";
+
 type Props = {
   prefs: TypePref[];
 };
-const Buttons = ({prefs}: Props) => {
+const Buttons = ({ prefs }: Props) => {
+  const {
+    isPopulationDataLoading,
+    populationData,
+    toggleMultipleSelectMode,
+    isMultipleSelectMode,
+    fetchSelectedPrefsPopulationData,
+    selectedPrefs,
+  } = useResas();
+
   return (
     <div className={styles.container}>
-      <MultipleSelectBtn />
-      <SelectAllBtn prefs = {prefs} />
+      {isMultipleSelectMode ? <SubmitBtn /> : <MultipleSelectOnBtn />}
+      <SelectAllBtn prefs={prefs} />
       <UnselectAllBtn />
     </div>
   );
