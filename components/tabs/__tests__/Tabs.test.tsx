@@ -1,5 +1,5 @@
 // import { render, screen } from "@testing-library/react";
-import { render, screen } from "../../../utils/test-utils";
+import { render, screen } from "../../../test-utils/customRender";
 import Tabs from "../index";
 import { ResasProvider } from "@/contexts/ResasContext";
 import Tab from "../tab";

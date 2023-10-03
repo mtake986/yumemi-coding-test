@@ -1,4 +1,4 @@
-import { render, screen } from "../../../utils/test-utils";
+import { render, screen } from "../../../test-utils/customRender";
 
 import WhenPplDataFetching from "../whenDataFetching/index";
 import MultipleSelectModeOn from "../multipleSelectModeOn/index";
