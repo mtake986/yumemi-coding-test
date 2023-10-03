@@ -1,5 +1,6 @@
 "use client";
 
+// import fetch from "node-fetch";
 import { useEffect, useState } from "react";
 
 const useFetch = (url: string) => {
@@ -18,7 +19,7 @@ const useFetch = (url: string) => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw Error("Could not fetch the data for that resource");
+          throw Error(`ERROR!! status: ${response.status}`);
         }
         return response.json();
       })

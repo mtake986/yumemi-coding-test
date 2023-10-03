@@ -1,7 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import Header from "../index";
+import Header from "../header/index";
+import Navbar from "..";
 
 describe("Header", () => {
+  it("should render navbar", () => {
+    render(<Navbar />); // Arrange
+    const navbar = screen.getByRole("navigation"); // Act
+    expect(navbar).toBeInTheDocument(); // Assert
+  });
+
   it("should render 都道府県別の人口推移 as a heading", () => {
     render(<Header title="都道府県別の人口推移" />); // Arrange
     const header = screen.getByRole("heading", {

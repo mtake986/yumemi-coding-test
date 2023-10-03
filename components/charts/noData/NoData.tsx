@@ -3,7 +3,9 @@ import styles from "./index.module.css";
 
 const NoData = () => {
   return (
-    <div className={styles.beforeFetching}>都道府県を選択してください。</div>
+    <div data-testid="noDataText" className={styles.beforeFetching}>
+      都道府県を選択してください。
+    </div>
   );
 };
 

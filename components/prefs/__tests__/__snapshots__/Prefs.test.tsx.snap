@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Prefs and Pref render:loding 1`] = `
+<DocumentFragment>
+  <section
+    class="container"
+    data-testid="prefsContainer"
+  >
+    <div>
+      都道府県を取得中です
+    </div>
+  </section>
+</DocumentFragment>
+`;

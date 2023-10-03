@@ -11,7 +11,7 @@ const Prefs = () => {
   );
 
   return (
-    <section className={styles.container}>
+    <section data-testid='prefsContainer' className={styles.container}>
       {error ? (
         <div className={styles.error}>{error}</div>
       ) : isPending ? (

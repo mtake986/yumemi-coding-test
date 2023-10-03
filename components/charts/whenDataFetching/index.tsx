@@ -7,7 +7,7 @@ const WhenPplDataFetching = () => {
 
   return (
     <div className={styles.fetching}>
-      <p>データを取得しています。</p>
+      <p data-testid='text'>データを取得しています。</p>
       <p>
         <span className={styles.percent}>
           {Math.ceil((populationData.length / selectedPrefs.length) * 100)}%
