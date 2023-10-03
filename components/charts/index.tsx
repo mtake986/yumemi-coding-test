@@ -6,7 +6,9 @@ import HighchartsReact from "highcharts-react-official";
 import { useResas } from "@/contexts/ResasContext";
 import { TypePopulationDataSeries } from "@/contexts/type";
 import { tabValues } from "@/public/constants";
-import styles from "./index.module.css";
+import WhenPplDataFetching from "./whenDataFetching";
+import MultipleSelectModeOn from "./multipleSelectModeOn";
+import NoData from "./noData/NoData";
 
 const PopulationChart = () => {
   const {
@@ -17,18 +19,15 @@ const PopulationChart = () => {
   } = useResas();
 
   if (isMultipleSelectMode) {
-    return (
-      <div className={styles.textWhenMultipleSelectMode}>
-        複数選択中です。確定ボタンをクリックすると、データを取得し、グラフが表示されます。
-      </div>
-    );
+    return <MultipleSelectModeOn />;
   }
 
   if (isPopulationDataLoading) {
-    return <div className={styles.fetching}>データを取得しています。</div>;
+    return <WhenPplDataFetching />;
   }
+
   if (populationData.length === 0 && !isPopulationDataLoading) {
-    return <div className={styles.beforeFetching}>都道府県を選択してください。</div>;
+    return <NoData />;
   }
 
   let series: Array<TypePopulationDataSeries> = [];

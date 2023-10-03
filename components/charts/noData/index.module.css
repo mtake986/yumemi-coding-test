@@ -1,0 +1,5 @@
+.beforeFetching {
+  font-size: var(--md-font-size);
+  padding: 0 12px;
+  text-align: center;
+}
