@@ -68,17 +68,18 @@
 | NEXT_PUBLIC_RESAS_API_KEY         | ResasAPIの自分のAPI Key　           　　|
 | NEXT_PUBLIC_RESAS_CONTENT_TYPE    | ResasAPIのheaders用のContent-Type　　　 | 
 
-### 工夫したこと
+### 工夫、苦労したこと
 - [x] 複数選択、全選択、全解除
 - [x] 人口データを取得中のUI
 - [x] スマホ対応
 - [x] faviconの設定
 - [x] グラフの点をホバー時に、都道府県・年・人口を表示（スタイルも少し分かりやすく太字で表示）
+- [x] ユニットテストの実装
 
 
 ### 達成できなかったこと
 - [ ] custom hooksの実装（現状useContext）
-- [ ] 十分なテストの実装
+- [ ] integration, E2Eテストの実装
 - [ ] 都道府県に地方別に分け、わかりやすく。
 - [ ] グラフの点をホバー時に、前年からの人口増減を表示
 
