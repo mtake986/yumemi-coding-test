@@ -12,12 +12,7 @@ type Props = {
 };
 const Buttons = ({ prefs }: Props) => {
   const {
-    isPopulationDataLoading,
-    populationData,
-    toggleMultipleSelectMode,
     isMultipleSelectMode,
-    fetchSelectedPrefsPopulationData,
-    selectedPrefs,
   } = useResas();
 
   return (

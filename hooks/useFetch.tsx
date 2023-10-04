@@ -19,7 +19,7 @@ const useFetch = (url: string) => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw Error(`ERROR!! status: ${response.status}`);
+          throw Error(`不具合が発生しました!! status: ${response.status}`);
         }
         return response.json();
       })

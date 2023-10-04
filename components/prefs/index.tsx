@@ -25,6 +25,8 @@ const Prefs = () => {
           </ul>
           <Buttons prefs={data} />
         </>
+      ) : !data ? (
+        <div>都道府県が見つかりませんでした</div>
       ) : null}
     </section>
   );
