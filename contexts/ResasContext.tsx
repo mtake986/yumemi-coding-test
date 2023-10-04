@@ -9,8 +9,6 @@ type ResasProviderProps = {
 };
 
 type ResasContextType = {
-  prefs: TypePref[];
-  fetchPrefs: () => void;
 
   currentTab: TypeTabValue;
   switchTab: (id: number) => void;
@@ -22,8 +20,6 @@ type ResasContextType = {
 
   fetchAllPrefsPopulationData: (prefs: TypePref[]) => void;
   removeAllPrefsPopulationData: () => void;
-
-  setPrefs: (prefs: TypePref[]) => void;
 
   toggleMultipleSelectMode: () => void;
   isMultipleSelectMode: boolean;
@@ -41,7 +37,6 @@ export function useResas() {
 }
 
 export function ResasProvider({ children }: ResasProviderProps) {
-  const [prefs, setPrefs] = useState<TypePref[]>([]);
   const [selectedPrefs, setSelectedPrefs] = useState<TypePref[]>([]);
 
   const [currentTab, setCurrentTab] = useState<TypeTabValue>(tabValues[0]);
@@ -52,34 +47,17 @@ export function ResasProvider({ children }: ResasProviderProps) {
   const [isMultipleSelectMode, setIsMultipleSelectMode] =
     useState<boolean>(false);
 
-  const fetchPrefs = () => {
-    // 47都道府県の一覧を取得
-    // API Doc: https://opendata.resas-portal.go.jp/docs/api/v1/prefectures.html
-    fetch("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
-      headers: new Headers({
-        "X-API-KEY": process.env.NEXT_PUBLIC_RESAS_API_KEY || "",
-        "Content-Type": process.env.NEXT_PUBLIC_RESAS_CONTENT_TYPE || "",
-      }),
-    })
-      .then((response) => response.json())
-      .then((res) => {
-        setPrefs(res.result);
-      });
-  };
-
   const switchTab = (id: number) => {
     setCurrentTab(tabValues[id]);
   };
 
   const removePopulationData = (pref: TypePref) => {
-    // setIsPopulationDataLoading(true);
     // もしpopulationDataにすでにデータがあれば、取り除く
     setPopulationData((prev) => {
       return prev.filter(
         (eachPref) => Object.keys(eachPref)[0] !== pref.prefName,
       );
     });
-    // setIsPopulationDataLoading(false);
   };
 
   // チェックボックスが押されたとき、1つの都道府県のデータを取得する
@@ -243,8 +221,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
   return (
     <ResasContext.Provider
       value={{
-        prefs,
-        fetchPrefs,
 
         currentTab,
         switchTab,
@@ -256,7 +232,6 @@ export function ResasProvider({ children }: ResasProviderProps) {
 
         fetchAllPrefsPopulationData,
         removeAllPrefsPopulationData,
-        setPrefs,
 
         toggleMultipleSelectMode,
         isMultipleSelectMode,

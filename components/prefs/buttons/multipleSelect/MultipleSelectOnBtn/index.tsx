@@ -6,9 +6,7 @@ import { useResas } from "@/contexts/ResasContext";
 const MultipleSelectOnBtn = () => {
   const {
     isPopulationDataLoading,
-    populationData,
     toggleMultipleSelectMode,
-    isMultipleSelectMode,
   } = useResas();
 
   return (

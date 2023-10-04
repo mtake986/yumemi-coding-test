@@ -21,8 +21,7 @@
 ## プロジェクト名
 
 都道府県別の人口推移
-[URL](https://jpn-population-graphs-1960-2045.vercel.app/)
-<!-- プロジェクトについて -->
+[URL](https://jpn-population-graph-range-1960-2045.vercel.app/)
 
 ## プロジェクトについて
 
@@ -30,7 +29,6 @@
 
 具体的なアプリ画面↓
 ![アプリ画面](./public/images/appHomePage.png "アプリ画面")
-<!-- <p align="right">(<a href="#top">トップへ</a>)</p> -->
 
 ### 環境
 
@@ -82,6 +80,7 @@
 - [ ] integration, E2Eテストの実装
 - [ ] 都道府県に地方別に分け、わかりやすく。
 - [ ] グラフの点をホバー時に、前年からの人口増減を表示
+- [ ] useMemo, useCallbackを使うことでのパフォーマンス向上
 
 
 ### 参考文献
@@ -94,7 +93,7 @@
 #### 開発に関して
 [テストの教科書](https://zenn.dev/tkdn/books/react-testing-patterns/viewer/quick-install)
 [fetch()をテスト](https://zenn.dev/tkdn/books/react-testing-patterns/viewer/testing-with-fetchmock)
-[Context APIでのテストの書き方](https://www.beingdev.online/posts/testing-react-components-depending-on-context-api)
+[Context APIでのテストの書き方（英語）](https://www.beingdev.online/posts/testing-react-components-depending-on-context-api)
 
 ### コーディングテスト概要
 [Coding Test Link](https://yumemi.notion.site/0e9ef27b55704d7882aab55cc86c999d)

@@ -1,6 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent, act, waitFor } from "@/test-utils/customRender";
-import MultipleSelectOnBtn from "@/components/prefs/buttons/multipleSelect/MultipleSelectOnBtn";
+import { render, screen, fireEvent } from "@/test-utils/customRender";
 import Buttons from "../buttons";
 
 const prefs = [

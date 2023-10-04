@@ -1,10 +1,10 @@
 "use client";
 
-// import fetch from "node-fetch";
+import { TypePref } from "@/contexts/type";
 import { useEffect, useState } from "react";
 
 const useFetch = (url: string) => {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<TypePref[]>([]);
   const [isPending, setIsPending] = useState<boolean>(true);
   const [error, setError] = useState(null);
 
