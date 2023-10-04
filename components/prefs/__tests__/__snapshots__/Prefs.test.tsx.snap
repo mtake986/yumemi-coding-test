@@ -13,19 +13,6 @@ exports[`Prefs and Pref render a loading text, 都道府県を取得中です  1
 </DocumentFragment>
 `;
 
-exports[`Prefs and Pref render: 47 prefs 1`] = `
-<DocumentFragment>
-  <section
-    class="container"
-    data-testid="prefsContainer"
-  >
-    <div>
-      都道府県が見つかりませんでした
-    </div>
-  </section>
-</DocumentFragment>
-`;
-
 exports[`Prefs and Pref render: no prefs, 都道府県が見つかりませんでした  1`] = `
 <DocumentFragment>
   <section
