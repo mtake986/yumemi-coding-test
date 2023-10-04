@@ -1,19 +1,19 @@
-"use client";
-import States from "@/components/States";
-import { ResasProvider, useResas } from "@/contexts/ResasContext";
-import { useState, useEffect } from "react";
+// "use client";
+import Prefs from "@/components/prefs";
+import styles from "./page.module.css";
+import PopulationChart from "@/components/charts";
+import Tabs from "@/components/tabs";
+import Navbar from "@/components/navbar";
 
 export default function HomePage() {
-  const {fetchJapanStates, japanStates} = useResas();
-  useEffect(() => {
-    fetchJapanStates();
-    
-  }, [japanStates]);
-
   return (
-      <div>
-        <h1>Japan States</h1>
-        <States />
-      </div>
+    <div className={styles.container}>
+      <Navbar />
+      <section className={styles.main}>
+        <Prefs />
+        <Tabs />
+        <PopulationChart />
+      </section>
+    </div>
   );
 }

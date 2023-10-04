@@ -1,0 +1,20 @@
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.input {
+  cursor: pointer;
+}
+.label {
+  cursor: pointer;
+}
+
+
+@media (max-width: 425px) {
+  .container {
+    font-size: var(--sm-font-size);
+  }
+}

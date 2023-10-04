@@ -1,0 +1,12 @@
+.fetching {
+  font-size: var(--md-font-size);
+  padding: 0 12px;
+  text-align: center;
+}
+
+.percent {
+  font-size: var(--xl-font-size);
+  font-style: italic;
+  padding: 0 6px;
+  text-align: center;
+}
