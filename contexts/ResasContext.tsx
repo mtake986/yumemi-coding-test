@@ -74,12 +74,11 @@ export function ResasProvider({ children }: ResasProviderProps) {
   const removePopulationData = (pref: TypePref) => {
     // setIsPopulationDataLoading(true);
     // もしpopulationDataにすでにデータがあれば、取り除く
-    setPopulationData(prev => {
+    setPopulationData((prev) => {
       return prev.filter(
         (eachPref) => Object.keys(eachPref)[0] !== pref.prefName,
-        )
-      }
-    );
+      );
+    });
     // setIsPopulationDataLoading(false);
   };
 
@@ -110,9 +109,9 @@ export function ResasProvider({ children }: ResasProviderProps) {
         });
       })
       .then(() => {
-                    setTimeout(() => {
-                      setIsPopulationDataLoading(false);
-                    }, 500);
+        setTimeout(() => {
+          setIsPopulationDataLoading(false);
+        }, 500);
       });
   };
 
@@ -160,11 +159,9 @@ export function ResasProvider({ children }: ResasProviderProps) {
           });
         })
         .then(() => {
-            setTimeout(() => {
-              i === prefs.length - 1
-                ? setIsPopulationDataLoading(false)
-                : null;
-            }, 500);
+          setTimeout(() => {
+            i === prefs.length - 1 ? setIsPopulationDataLoading(false) : null;
+          }, 500);
         });
     }
   };

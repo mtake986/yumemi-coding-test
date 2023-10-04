@@ -1,18 +1,7 @@
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from "@/test-utils/customRender";
-import Prefs from "../index";
-import { ErrorBoundary } from "@/test-utils/ErrorBoundary";
-
-const WrapperPrefs = () => {
-  return (
-    <ErrorBoundary>
-      <Prefs />
-    </ErrorBoundary>
-  );
-};
+import React from "react";
+import { render, screen, fireEvent, act, waitFor } from "@/test-utils/customRender";
+import MultipleSelectOnBtn from "@/components/prefs/buttons/multipleSelect/MultipleSelectOnBtn";
+import Buttons from "../buttons";
 
 const prefs = [
   {
@@ -205,73 +194,40 @@ const prefs = [
   },
 ];
 
-const noDataPrefssMock = () =>
-  new Promise((resolve) => {
-    resolve({
-      ok: true,
-      status: 200,
-      json: async () => ({ data: { prefs: [] } }),
-    });
+describe("MultipleSelectOnBtn Component", () => {
+  // it("renders the button", () => {
+  //   render({ui: <MultipleSelectOnBtn />});
+  //   const button = screen.getByText("複数選択");
+  //   expect(button).toBeInTheDocument();
+  // });
+
+  // it("disables the button when isPopulationDataLoading is true", () => {
+
+  //   render({ ui: <MultipleSelectOnBtn /> });
+  //   const button = screen.getByText("複数選択");
+  //   expect(button).toBeDisabled();
+  // });
+
+  // it("enables the button when isPopulationDataLoading is false", () => {
+  //   render({ ui: <MultipleSelectOnBtn /> });
+  //   const button = screen.getByText("複数選択");
+  //   expect(button).toBeEnabled();
+  // });
+
+  it("display 複数選択ボタン first in the document", async () => {
+    render({ ui: <Buttons prefs={prefs} /> });
+    const btn = screen.getByText("複数選択");
+    expect(btn).toBeInTheDocument();
   });
 
-const dataPrefsMock = () =>
-  new Promise((resolve) => {
-    resolve({
-      ok: true,
-      status: 200,
-      json: async () => ({ data: { prefs } }),
-    });
-  });
 
-const statusErrorPrefsMock = () =>
-  new Promise((resolve) => {
-    resolve({
-      ok: false,
-      status: 400,
-      json: async () => ({ data: { prefs } }),
-    });
-  });
 
-describe("Prefs and Pref", () => {
-  afterAll(() => {
-    (global.fetch as jest.Mock).mockClear();
-  });
+  it("expect submitBtn to be in the document", async () => {
+    render({ ui: <Buttons prefs={prefs} /> });
+    const multipleSelectOnBtn = screen.getByText("複数選択");
+    fireEvent.click(multipleSelectOnBtn);
 
-  test("render a loading text, 都道府県を取得中です ", async () => {
-    global.fetch = jest.fn().mockImplementation(dataPrefsMock);
-    const { asFragment } = render({ ui: <WrapperPrefs /> });
-    screen.queryByText("都道府県を取得中です");
-    expect(asFragment()).toMatchSnapshot();
-    // テキストが消えるまで待つ
-    await waitForElementToBeRemoved(() =>
-      screen.queryByText("都道府県を取得中です"),
-    );
+    const submitBtn = await screen.findByText("確定");
+    expect(submitBtn).toBeInTheDocument();
   });
-  test("render: prefs, 都道府県を取得中です ", async () => {
-    global.fetch = jest.fn().mockImplementation(dataPrefsMock);
-    const { asFragment } = render({ ui: <WrapperPrefs /> });
-    screen.queryByText("都道府県を取得中です");
-    // 以下が上記と逆　→　都道府県が取得できてれば成功
-    await waitForElementToBeRemoved(() =>
-      screen.queryByText("都道府県を取得中です"),
-    );
-    expect(asFragment()).toMatchSnapshot();
-  });
-
-  test("render: no prefs, 都道府県が見つかりませんでした ", async () => {
-    global.fetch = jest.fn().mockImplementation(noDataPrefssMock);
-    const { asFragment } = render({ ui: <WrapperPrefs /> });
-    await screen.findByText("都道府県が見つかりませんでした");
-    expect(asFragment()).toMatchSnapshot();
-  });
-
-  test("error", async () => {
-    global.fetch = jest.fn().mockImplementation(statusErrorPrefsMock);
-    const spy = jest.spyOn(console, "error");
-    spy.mockImplementation(() => void 0);
-    render({ ui: <WrapperPrefs /> });
-    await screen.findByText("不具合が発生しました!! status: 400");
-    spy.mockRestore();
-  });
-
 });

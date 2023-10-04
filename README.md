@@ -15,6 +15,8 @@
 2. [環境](#環境)
 3. [動作確認](#動作確認)
 4. [環境変数の一覧](#環境変数の一覧)
+5. [参考文献](#参考文献)
+6. [コーディングテスト概要](#コーディングテスト概要)
 
 ## プロジェクト名
 
@@ -80,4 +82,19 @@
 - [ ] 都道府県に地方別に分け、わかりやすく。
 - [ ] グラフの点をホバー時に、前年からの人口増減を表示
 
+
+### 参考文献
+
+#### 公式ドキュメント
+[ResasAPI](https://opendata.resas-portal.go.jp/docs/api/v1/population/composition/perYear.html)
+[Next.js公式](https://nextjs.org/docs/getting-started)
+[React公式](https://ja.react.dev/blog/2023/03/16/introducing-react-dev)
+
+#### 開発に関して
+[テストの教科書](https://zenn.dev/tkdn/books/react-testing-patterns/viewer/quick-install)
+[fetch()をテスト](https://zenn.dev/tkdn/books/react-testing-patterns/viewer/testing-with-fetchmock)
+[Context APIでのテストの書き方](https://www.beingdev.online/posts/testing-react-components-depending-on-context-api)
+
+### コーディングテスト概要
 [Coding Test Link](https://yumemi.notion.site/0e9ef27b55704d7882aab55cc86c999d)
+

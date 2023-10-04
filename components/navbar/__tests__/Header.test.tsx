@@ -1,16 +1,16 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../../test-utils/customRender";
 import Header from "../header/index";
 import Navbar from "..";
 
 describe("Header", () => {
   it("should render navbar", () => {
-    render(<Navbar />); // Arrange
+    render({ui: <Navbar />}); // Arrange
     const navbar = screen.getByRole("navigation"); // Act
     expect(navbar).toBeInTheDocument(); // Assert
   });
 
   it("should render 都道府県別の人口推移 as a heading", () => {
-    render(<Header title="都道府県別の人口推移" />); // Arrange
+    render({ui: <Header title="都道府県別の人口推移" />}); // Arrange
     const header = screen.getByRole("heading", {
       name: "都道府県別の人口推移",
     }); // Act
@@ -18,7 +18,7 @@ describe("Header", () => {
   });
 
   it("should render test as a heading", () => {
-    render(<Header title="test" />); // Arrange
+    render({ui: <Header title="test" />}); // Arrange
     const header = screen.getByRole("heading", {
       name: "test",
     }); // Act
